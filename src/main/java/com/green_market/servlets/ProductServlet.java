@@ -82,7 +82,7 @@ public class ProductServlet extends HttpServlet {
 
                         // Save new images
                         JSONArray imagesArray = (JSONArray) json.get("images");
-                        for (Object object :imagesArray) {
+                        for (Object object : imagesArray) {
                             pstm = connection.prepareStatement("insert into product_has_images values (?,?,?)");
                             pstm.setObject(1, 0);
                             pstm.setObject(2, object);
@@ -96,7 +96,7 @@ public class ProductServlet extends HttpServlet {
                         response.add("message", "success");
                         response.add("code", 201);
                         writer.print(response.build());
-                    }else {
+                    } else {
                         // If update fails, rollback the transaction
                         connection.rollback();
                         response.add("message", "failed");
@@ -131,104 +131,101 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Jws<Claims> claims = isValidJWT(req, resp);
-        if (!Objects.equals(claims, null)) {
-            JsonObjectBuilder response = Json.createObjectBuilder();
-            PrintWriter writer = resp.getWriter();
-            resp.setContentType("application/json");
+        JsonObjectBuilder response = Json.createObjectBuilder();
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
 
-            try {
-                BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
-                Connection connection = ds.getConnection();
+        try {
+            BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
+            Connection connection = ds.getConnection();
 
-                String action = req.getParameter("action");
-                PreparedStatement pstm = null;
-                if (Objects.equals(action, "all")){
-                    pstm = connection.prepareStatement("select * from products");
-                }else {
-                    pstm = connection.prepareStatement("select * from products where id=?");
-                    pstm.setObject(1, action);
+            String action = req.getParameter("action");
+            PreparedStatement pstm = null;
+            if (Objects.equals(action, "all")) {
+                pstm = connection.prepareStatement("select * from products");
+            } else {
+                pstm = connection.prepareStatement("select * from products where id=?");
+                pstm.setObject(1, action);
+            }
+
+            ResultSet rst = pstm.executeQuery();
+
+
+            if (Objects.equals(action, "all")) {
+                JsonArrayBuilder products = Json.createArrayBuilder();
+                while (rst.next()) {
+                    JsonObjectBuilder product = Json.createObjectBuilder();
+                    product.add("id", rst.getInt(1));
+                    product.add("name", rst.getString(2));
+                    product.add("price", rst.getDouble(3));
+                    product.add("ratings", rst.getDouble(4));
+                    product.add("description", rst.getString(6));
+                    product.add("qty", rst.getInt(7));
+
+                    pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
+                    pstm.setObject(1, rst.getInt(1));
+
+                    ResultSet resultSet = pstm.executeQuery();
+                    JsonArrayBuilder images = Json.createArrayBuilder();
+
+                    while (resultSet.next()) {
+                        JsonObjectBuilder img = Json.createObjectBuilder();
+                        img.add("id", resultSet.getInt(1));
+                        img.add("url", resultSet.getString(2));
+                        images.add(img);
+                    }
+
+                    product.add("images", images);
+
+                    products.add(product);
+                }
+                response.add("data", products);
+                response.add("message", "success");
+                response.add("code", 200);
+            } else {
+                JsonObjectBuilder product = Json.createObjectBuilder();
+                while (rst.next()) {
+                    product.add("id", rst.getInt(1));
+                    product.add("name", rst.getString(2));
+                    product.add("price", rst.getDouble(3));
+                    product.add("ratings", rst.getDouble(4));
+                    product.add("description", rst.getString(6));
+                    product.add("qty", rst.getInt(7));
+
+                    pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
+                    pstm.setObject(1, rst.getInt(1));
+
+                    ResultSet resultSet = pstm.executeQuery();
+                    JsonArrayBuilder images = Json.createArrayBuilder();
+
+                    while (resultSet.next()) {
+                        JsonObjectBuilder img = Json.createObjectBuilder();
+                        img.add("id", resultSet.getInt(1));
+                        img.add("url", resultSet.getString(2));
+                        images.add(img);
+                    }
+
+                    product.add("images", images);
                 }
 
-                ResultSet rst = pstm.executeQuery();
+                JsonObject build = product.build();
 
-
-                if (Objects.equals(action, "all")){
-                    JsonArrayBuilder products = Json.createArrayBuilder();
-                    while (rst.next()) {
-                        JsonObjectBuilder product = Json.createObjectBuilder();
-                        product.add("id", rst.getInt(1));
-                        product.add("name", rst.getString(2));
-                        product.add("price", rst.getDouble(3));
-                        product.add("ratings", rst.getDouble(4));
-                        product.add("description", rst.getString(6));
-                        product.add("qty", rst.getInt(7));
-
-                        pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
-                        pstm.setObject(1, rst.getInt(1));
-
-                        ResultSet resultSet = pstm.executeQuery();
-                        JsonArrayBuilder images = Json.createArrayBuilder();
-
-                        while (resultSet.next()) {
-                            JsonObjectBuilder img = Json.createObjectBuilder();
-                            img.add("id", resultSet.getInt(1));
-                            img.add("url", resultSet.getString(2));
-                            images.add(img);
-                        }
-
-                        product.add("images", images);
-
-                        products.add(product);
-                    }
-                    response.add("data", products);
+                if (build.isEmpty()) {
+                    response.add("message", "product not exist");
+                    response.add("code", 400);
+                    resp.setStatus(400);
+                } else {
+                    response.add("data", build);
                     response.add("message", "success");
                     response.add("code", 200);
-                }else {
-                    JsonObjectBuilder product = Json.createObjectBuilder();
-                    while (rst.next()) {
-                        product.add("id", rst.getInt(1));
-                        product.add("name", rst.getString(2));
-                        product.add("price", rst.getDouble(3));
-                        product.add("ratings", rst.getDouble(4));
-                        product.add("description", rst.getString(6));
-                        product.add("qty", rst.getInt(7));
-
-                        pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
-                        pstm.setObject(1, rst.getInt(1));
-
-                        ResultSet resultSet = pstm.executeQuery();
-                        JsonArrayBuilder images = Json.createArrayBuilder();
-
-                        while (resultSet.next()) {
-                            JsonObjectBuilder img = Json.createObjectBuilder();
-                            img.add("id", resultSet.getInt(1));
-                            img.add("url", resultSet.getString(2));
-                            images.add(img);
-                        }
-
-                        product.add("images", images);
-                    }
-
-                    JsonObject build = product.build();
-
-                    if (build.isEmpty()){
-                        response.add("message", "product not exist");
-                        response.add("code", 400);
-                        resp.setStatus(400);
-                    }else {
-                        response.add("data", build);
-                        response.add("message", "success");
-                        response.add("code", 200);
-                    }
                 }
-
-                writer.print(response.build());
-                connection.close();
-                writer.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
+
+            writer.print(response.build());
+            connection.close();
+            writer.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 
@@ -272,7 +269,7 @@ public class ProductServlet extends HttpServlet {
 
                     // Save new images
                     JSONArray imagesArray = (JSONArray) json.get("images");
-                    for (Object object :imagesArray) {
+                    for (Object object : imagesArray) {
                         pstm = connection.prepareStatement("insert into product_has_images values (?,?,?)");
                         pstm.setObject(1, 0);
                         pstm.setObject(2, object);
