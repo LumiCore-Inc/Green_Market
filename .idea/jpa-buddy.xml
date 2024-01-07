@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+    <option name="reverseEngineeringLastDbConnectionId" value="e853b5a1-d37f-40ff-9fce-e40535ea5ec1__green_market" />
+    <option name="reLastEntityCreationPackage" value="src/main/java/com/green_market/entities" />
+  </component>
+</project>
