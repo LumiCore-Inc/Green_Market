@@ -1,20 +1,29 @@
 package com.green_market.config;
 
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Security {
 
-    public boolean isValidUser(String username, String password) {
+    private static final String SECRET_KEY = "greenmarket";
+    public static boolean isValidUser(String username, String password) {
         // Mock data - replace this with actual database interaction
         Map<String, String> users = new HashMap<>();
-        users.put("john", "password123");
-        users.put("alice", "qwerty");
+        users.put(username, password);
 
         // Check if the provided username exists
         if (users.containsKey(username)) {
@@ -28,24 +37,54 @@ public class Security {
     }
 
 
-    public String createJWT(String username) {
-        // Current time in milliseconds
+    public static String createJWT(String type, int userID) {
         long currentTimeMillis = System.currentTimeMillis();
-
-        // Set the token expiration time (e.g., 1 hour)
         long expirationTime = currentTimeMillis + (60 * 60 * 1000); // 1 hour
 
-        // Build the JWT claims
-        JwtBuilder builder = Jwts.builder()
-                .setSubject(username) // Set subject (user)
-                .setIssuedAt(new Date(currentTimeMillis)) // Set issued time
-                .setExpiration(new Date(expirationTime)); // Set expiration time
+        Key key = new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
 
-        // Sign the token with a secret key using HS256 algorithm
-        builder.signWith(SignatureAlgorithm.HS256, "yourSecretKey");
+        return Jwts.builder()
+                .setSubject(type)
+                .claim("userID", userID)
+                .setIssuedAt(new Date(currentTimeMillis))
+                .setExpiration(new Date(expirationTime))
+                .signWith(SignatureAlgorithm.HS256,key)
+                .compact();
+    }
 
-        // Generate the JWT token
-        return builder.compact();
+    public static Jws<Claims> isValidJWT(HttpServletRequest req, HttpServletResponse resp) {
+
+        String authHeader = req.getHeader("Authorization");
+
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            // Extract the token from the Authorization header
+            String token = authHeader.substring(7); // Remove "Bearer " prefix
+            try {
+                Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token);
+                return getIDFromJWT(token);
+            } catch (Exception e) {
+                try {
+                    JsonObjectBuilder response = Json.createObjectBuilder();
+                    PrintWriter writer = resp.getWriter();
+                    resp.setContentType("application/json");
+
+                    response.add("message", "un authorization");
+                    response.add("code", 403);
+                    resp.setStatus(403);
+
+                    writer.print(response.build());
+                    writer.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+        }
+        return null;
+    }
+
+    public static Jws<Claims> getIDFromJWT(String jwt) {
+        return Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(jwt);
     }
 
 }

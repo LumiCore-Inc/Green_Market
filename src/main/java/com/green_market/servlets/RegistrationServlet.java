@@ -1,12 +1,7 @@
 package com.green_market.servlets;
 
-
-import com.green_market.util.EmailSender;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -20,29 +15,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static com.green_market.util.EmailSender.sendEmail;
+import static com.green_market.util.JsonPasser.jsonPasser;
 
 @WebServlet(name = "registrationServlet", value = "/register")
 public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        String jsonBody = new BufferedReader(new InputStreamReader(req.getInputStream())).lines().collect(
-                Collectors.joining("\n"));
-
         JsonObjectBuilder response = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-        JSONParser parser = new JSONParser();
-        JSONObject json = null;
-        try {
-            json = (JSONObject) parser.parse(jsonBody);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        JSONObject json = jsonPasser(req);
 
         try {
             BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
@@ -55,7 +41,7 @@ public class RegistrationServlet extends HttpServlet {
                 Integer id = rst.getInt(1);
                 if (!Objects.equals(id, null)){
                     response.add("message", "username already exist");
-                    response.add("code", 403);
+                    response.add("code", 404);
 
                     writer.print(response.build());
                     writer.close();
