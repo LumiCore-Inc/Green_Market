@@ -30,6 +30,7 @@ public class UserServlet extends HttpServlet {
         String action = req.getParameter("action");
         if (action.equals("login")){
             userLogin(req, resp);
+            System.out.println("AWA");
         }else if (action.equals("register")){
             userRegister(req, resp);
         }
@@ -104,6 +105,8 @@ public class UserServlet extends HttpServlet {
     }
 
     private void userLogin(HttpServletRequest req, HttpServletResponse resp)throws IOException {
+
+        System.out.println(req);
         JsonObjectBuilder response = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
@@ -143,6 +146,8 @@ public class UserServlet extends HttpServlet {
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+
+                    System.out.println(response.build());
 
                     writer.print(response.build());
                     writer.close();

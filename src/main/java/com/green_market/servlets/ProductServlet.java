@@ -1,6 +1,5 @@
 package com.green_market.servlets;
 
-import com.green_market.entities.Product;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 import static com.green_market.config.Security.isValidJWT;
@@ -26,7 +26,7 @@ import static com.green_market.util.JsonPasser.jsonPasser;
 @WebServlet(name = "productServlet", value = "/product")
 public class ProductServlet extends HttpServlet {
 
-    @Override
+    @Override// save product
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Jws<Claims> claims = isValidJWT(req, resp);
         if (!Objects.equals(claims, null)) {
@@ -128,8 +128,7 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-
-    @Override
+    @Override// get product
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObjectBuilder response = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
@@ -151,13 +150,14 @@ public class ProductServlet extends HttpServlet {
             ResultSet rst = pstm.executeQuery();
 
 
+            DecimalFormat df = new DecimalFormat("0.00");
             if (Objects.equals(action, "all")) {
                 JsonArrayBuilder products = Json.createArrayBuilder();
                 while (rst.next()) {
                     JsonObjectBuilder product = Json.createObjectBuilder();
                     product.add("id", rst.getInt(1));
                     product.add("name", rst.getString(2));
-                    product.add("price", rst.getDouble(3));
+                    product.add("price", df.format(rst.getDouble(3)));
                     product.add("ratings", rst.getDouble(4));
                     product.add("description", rst.getString(6));
                     product.add("qty", rst.getInt(7));
@@ -187,7 +187,7 @@ public class ProductServlet extends HttpServlet {
                 while (rst.next()) {
                     product.add("id", rst.getInt(1));
                     product.add("name", rst.getString(2));
-                    product.add("price", rst.getDouble(3));
+                    product.add("price", df.format(rst.getDouble(3)));
                     product.add("ratings", rst.getDouble(4));
                     product.add("description", rst.getString(6));
                     product.add("qty", rst.getInt(7));
@@ -229,7 +229,7 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    @Override
+    @Override// update product
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Jws<Claims> claims = isValidJWT(req, resp);
         if (!Objects.equals(claims, null)) {
@@ -317,7 +317,7 @@ public class ProductServlet extends HttpServlet {
     }
 
 
-    @Override
+    @Override// delete product
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Jws<Claims> claims = isValidJWT(req, resp);
         if (!Objects.equals(claims, null)) {
