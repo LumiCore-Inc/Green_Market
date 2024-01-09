@@ -43,6 +43,118 @@ INSERT INTO `admins` VALUES (1,'ushan','ushanshanilka80@gmail.com','ft0HuIPBfRdM
 UNLOCK TABLES;
 
 --
+-- Table structure for table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cart_user_id_fk` (`user_id`),
+  CONSTRAINT `cart_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart`
+--
+
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` VALUES (1,8);
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cart_has_product`
+--
+
+DROP TABLE IF EXISTS `cart_has_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart_has_product` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cart_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `car_has_product_product_id_fk` (`product_id`),
+  KEY `cart_has_product_cart_id_fk` (`cart_id`),
+  CONSTRAINT `car_has_product_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `cart_has_product_cart_id_fk` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart_has_product`
+--
+
+LOCK TABLES `cart_has_product` WRITE;
+/*!40000 ALTER TABLE `cart_has_product` DISABLE KEYS */;
+INSERT INTO `cart_has_product` VALUES (2,1,12),(8,1,3);
+/*!40000 ALTER TABLE `cart_has_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order`
+--
+
+DROP TABLE IF EXISTS `order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `total` double NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `order_user_id_fk` (`user_id`),
+  CONSTRAINT `order_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order`
+--
+
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_details`
+--
+
+DROP TABLE IF EXISTS `order_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_details` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `unit_price` double NOT NULL,
+  `qty` double NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `order_details_order_id_fk` (`order_id`),
+  KEY `order_details_product_id_fk` (`product_id`),
+  CONSTRAINT `order_details_order_id_fk` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
+  CONSTRAINT `order_details_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_details`
+--
+
+LOCK TABLES `order_details` WRITE;
+/*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `product_has_images`
 --
 
@@ -137,4 +249,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-07 18:28:45
+-- Dump completed on 2024-01-09 23:49:43

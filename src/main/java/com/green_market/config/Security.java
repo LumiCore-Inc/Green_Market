@@ -52,9 +52,12 @@ public class Security {
                 .compact();
     }
 
-    public static Jws<Claims> isValidJWT(HttpServletRequest req, HttpServletResponse resp) {
+    public static Jws<Claims> isValidJWT(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String authHeader = req.getHeader("Authorization");
+        JsonObjectBuilder response = Json.createObjectBuilder();
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             // Extract the token from the Authorization header
@@ -63,23 +66,23 @@ public class Security {
                 Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token);
                 return getIDFromJWT(token);
             } catch (Exception e) {
-                try {
-                    JsonObjectBuilder response = Json.createObjectBuilder();
-                    PrintWriter writer = resp.getWriter();
-                    resp.setContentType("application/json");
 
-                    response.add("message", "un authorization");
-                    response.add("code", 403);
-                    resp.setStatus(403);
 
-                    writer.print(response.build());
-                    writer.close();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                response.add("message", "Unauthorized Request");
+                response.add("code", 403);
+                resp.setStatus(403);
+
+                writer.print(response.build());
+                writer.close();
             }
 
         }
+        response.add("message", "Unauthorized Request");
+        response.add("code", 403);
+        resp.setStatus(403);
+
+        writer.print(response.build());
+        writer.close();
         return null;
     }
 

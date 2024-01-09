@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "ced0cf47-e540-49ec-9d5d-41fab19ab6d7",
+		"name": "Green-Market",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14608227"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "adminLogin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"shanilka\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/green_market_war_exploded/admin"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "saveProduct",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBRE1JTiIsInVzZXJJRCI6MiwiaWF0IjoxNzA0NjI5ODUyLCJleHAiOjE3MDQ2MzM0NTJ9.pELHi1RXIYMZECdA6OVIigl107U51ukuFdNArDJ_slI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n            \"name\": \"Product 04- update\",\r\n            \"price\": 500.0,\r\n            \"description\": \"ABCDEND JGHG GHJG HGHJGJ\",\r\n            \"qty\": 100,\r\n            \"images\": [\r\n                \"A\"\r\n            ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/green_market_war_exploded/product"
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBRE1JTiIsInVzZXJJRCI6MiwiaWF0IjoxNzA0NjI5ODUyLCJleHAiOjE3MDQ2MzM0NTJ9.pELHi1RXIYMZECdA6OVIigl107U51ukuFdNArDJ_slI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id\": 7,\r\n            \"name\": \"Product 04- update\",\r\n            \"price\": 500.0,\r\n            \"description\": \"ABCDEND JGHG GHJG HGHJGJ\",\r\n            \"qty\": 100,\r\n            \"images\": [\r\n                \"A\"\r\n            ]\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/green_market_war_exploded/product"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBRE1JTiIsInVzZXJJRCI6MiwiaWF0IjoxNzA0NjI5ODUyLCJleHAiOjE3MDQ2MzM0NTJ9.pELHi1RXIYMZECdA6OVIigl107U51ukuFdNArDJ_slI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"id\": 7,\r\n            \"name\": \"Product 04- update\",\r\n            \"price\": 500.0,\r\n            \"description\": \"ABCDEND JGHG GHJG HGHJGJ\",\r\n            \"qty\": 100,\r\n            \"images\": [\r\n                \"A\"\r\n            ]\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/green_market_war_exploded/product?id=7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"green_market_war_exploded",
+								"product"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProduct",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBRE1JTiIsInVzZXJJRCI6MiwiaWF0IjoxNzA0NjI2MTg3LCJleHAiOjE3MDQ2Mjk3ODd9.ACw48qVTeUFd-q0OT3PNKNu5Fn2zWRDZxl5uxlYArho",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/green_market_war_exploded/product?action=all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"green_market_war_exploded",
+								"product"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "all"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "userLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"ushan\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/green_market_war_exploded/user?action=login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"green_market_war_exploded",
+								"user"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "login"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userRegister",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"shaaa\",\r\n    \"firstName\":\"Jony\",\r\n    \"lastName\":\"Snn\",\r\n    \"tp\":\"119\",\r\n    \"address\":\"Matara\",\r\n    \"password\":\"1111\",\r\n    \"email\":\"ushanshanilka80@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/green_market_war_exploded/user?action=register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"green_market_war_exploded",
+								"user"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "register"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "addProductToCart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSIiwidXNlcklEIjo4LCJpYXQiOjE3MDQ4MTI4NjksImV4cCI6MTcwNDgxNjQ2OX0.LSCZLSrohXNEygLtYDaTCyqpBjOJ6KRTHJ-6f-6kALU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/green_market_war_exploded/cart?productId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"green_market_war_exploded",
+								"cart"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCartProduct",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSIiwidXNlcklEIjo4LCJpYXQiOjE3MDQ4MTY1MDMsImV4cCI6MTcwNDgyMDEwM30.DcaAhQu85vBmjFF9HX45UzJXJfK-aWYHRIbGFctQL3o",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/green_market_war_exploded/cart?productId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"green_market_war_exploded",
+								"cart"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeProductFromCart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSIiwidXNlcklEIjo4LCJpYXQiOjE3MDQ4MTY1MDMsImV4cCI6MTcwNDgyMDEwM30.DcaAhQu85vBmjFF9HX45UzJXJfK-aWYHRIbGFctQL3o",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/green_market_war_exploded/cart?productCartId=7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"green_market_war_exploded",
+								"cart"
+							],
+							"query": [
+								{
+									"key": "productCartId",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
