@@ -106,8 +106,6 @@ public class UserServlet extends HttpServlet {
     }
 
     private void userLogin(HttpServletRequest req, HttpServletResponse resp)throws IOException {
-
-        System.out.println(req);
         JsonObjectBuilder response = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
@@ -140,20 +138,19 @@ public class UserServlet extends HttpServlet {
                             response.add("code", 200);
 
                             sendEmail(rst.getString(8), "Login Success","Green Market Login Success");
+
+                            writer.print(response.build());
+                            writer.close();
                         }else {
                             response.add("message", "invalid username or password");
                             response.add("code", 404);
+
+                            writer.print(response.build());
+                            writer.close();
                         }
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-
-                    System.out.println(response.build());
-
-                    writer.print(response.build());
-                    writer.close();
-                    connection.close();
-                    return;
                 }
             }
             response.add("message", "invalid username or password");
