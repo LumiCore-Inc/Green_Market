@@ -19,6 +19,7 @@ import java.util.Objects;
 
 import static com.green_market.config.Security.createJWT;
 import static com.green_market.util.AESEncryption.decrypt;
+import static com.green_market.util.AESEncryption.encrypt;
 import static com.green_market.util.EmailSender.sendEmail;
 import static com.green_market.util.JsonPasser.jsonPasser;
 
@@ -85,7 +86,7 @@ public class UserServlet extends HttpServlet {
             pstm.setObject(4, lastName);
             pstm.setObject(5, tp);
             pstm.setObject(6, address);
-            pstm.setObject(7, password);
+            pstm.setObject(7, encrypt(password));
             pstm.setObject(8, email);
             int i = pstm.executeUpdate();
 
@@ -99,7 +100,7 @@ public class UserServlet extends HttpServlet {
             }
             connection.close();
             writer.close();
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             throwables.printStackTrace();
         }
     }
