@@ -12,7 +12,7 @@
     //  String username = request.getParameter("username");
 //  String password = request.getParameter("password");
 
-    String apiUrl = "http://localhost:8080/green_market_war_exploded/user?action=login";
+    String apiUrl = "http://localhost:8080/Green_Market_war_exploded/user?action=login";
     String username = "ushan";
     String password = "1234";
 

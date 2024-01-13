@@ -19,6 +19,7 @@ import java.util.Objects;
 
 import static com.green_market.config.Security.createJWT;
 import static com.green_market.util.AESEncryption.decrypt;
+import static com.green_market.util.AESEncryption.encrypt;
 import static com.green_market.util.EmailSender.sendEmail;
 import static com.green_market.util.JsonPasser.jsonPasser;
 
@@ -85,7 +86,7 @@ public class UserServlet extends HttpServlet {
             pstm.setObject(4, lastName);
             pstm.setObject(5, tp);
             pstm.setObject(6, address);
-            pstm.setObject(7, password);
+            pstm.setObject(7, encrypt(password));
             pstm.setObject(8, email);
             int i = pstm.executeUpdate();
 
@@ -99,14 +100,12 @@ public class UserServlet extends HttpServlet {
             }
             connection.close();
             writer.close();
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             throwables.printStackTrace();
         }
     }
 
     private void userLogin(HttpServletRequest req, HttpServletResponse resp)throws IOException {
-
-        System.out.println(req);
         JsonObjectBuilder response = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
@@ -139,20 +138,19 @@ public class UserServlet extends HttpServlet {
                             response.add("code", 200);
 
                             sendEmail(rst.getString(8), "Login Success","Green Market Login Success");
+
+                            writer.print(response.build());
+                            writer.close();
                         }else {
                             response.add("message", "invalid username or password");
                             response.add("code", 404);
+
+                            writer.print(response.build());
+                            writer.close();
                         }
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-
-                    System.out.println(response.build());
-
-                    writer.print(response.build());
-                    writer.close();
-                    connection.close();
-                    return;
                 }
             }
             response.add("message", "invalid username or password");
