@@ -41,7 +41,7 @@ public class EmailSender {
             message.setSubject(subject);
 
             // Set the actual message
-            message.setText(body);
+            message.setContent(body, "text/html");
 
             // Send message
             Transport.send(message);
