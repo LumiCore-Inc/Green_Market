@@ -1,10 +1,7 @@
 package com.green_market.config;
 
 import io.jsonwebtoken.*;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;

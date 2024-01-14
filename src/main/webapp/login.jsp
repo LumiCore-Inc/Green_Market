@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,7 @@
 						<hr id="indicator">
 					</div>
 
-					<input type="hidden" id="response" value="<%= response.getWriter()%>">
+					<input type="hidden" id="status" value="<%= (request.getSession().getAttribute("status") != null) ? request.getSession().getAttribute("status") : "lol" %>">
 					<form id="loginForm" method="post" action="user">
 						<input id="userName" type="text" name="userName" value="" placeholder="User Name">
 						<input id="password" type="password" name="password" value="" placeholder="Password">
@@ -62,6 +61,11 @@
 <script src="js/customerProfile.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="alert/dist/sweetalert.css">
-
+<script type="text/javascript">
+	var status = document.getElementById("status").value;
+	if (status == "Error") {
+		swal("Error", "Invalid username or password", "error")
+	}
+</script>
 </body>
 </html>
