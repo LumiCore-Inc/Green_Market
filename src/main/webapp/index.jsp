@@ -8,6 +8,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>UMart | Ecommerce</title>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,23 +23,12 @@
 
 
 <div id="Home">
-	<div class="header">
 		<div class="container">
-			<div class="row">
-				<div class="col-2">
-					<h1>Give Your Workout <br> A New Style!</h1>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet, commodi eligendi esse facere fuga labore, laborum maxime odio quas quis quos reiciendis?</p>
-					<a href="" class="btn">Explore Now  &#8594;</a>
-				</div>
-				<div class="col-2">
-					<img src="assets/images/image1.png" >
-				</div>
-			</div>
+			<img src="img/christmas-home.png" alt="home-image" style="width: -webkit-fill-available;">
 		</div>
-	</div>
+</div>
 
 <jsp:include page="footer.jsp" />
-</div>
 
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/navBar.js"></script>
