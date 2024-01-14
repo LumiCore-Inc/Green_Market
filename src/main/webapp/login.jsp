@@ -32,7 +32,8 @@
 						<hr id="indicator">
 					</div>
 
-					<input type="hidden" id="status" value="<%= (request.getSession().getAttribute("status") != null) ? request.getSession().getAttribute("status") : "lol" %>">
+					<input type="hidden" id="status" value="<%= (request.getSession().getAttribute("status") != null) ? request.getSession().getAttribute("status") : "" %>">
+					<input type="hidden" id="message" value="<%= (request.getSession().getAttribute("message") != null) ? request.getSession().getAttribute("message") : "Something went wrong!" %>">
 					<form id="loginForm" method="post" action="user">
 						<input id="userName" type="text" name="userName" value="" placeholder="User Name">
 						<input id="password" type="password" name="password" value="" placeholder="Password">
@@ -41,16 +42,16 @@
 					</form>
 
 					<form id="regForm" method="post" action="register">
-						<input id="txtUserName" type="text" placeholder="User Name">
-						<input id="txtUserEmail" type="email" placeholder="Email">
-						<input id="txtUserPassword" type="password" placeholder="Password">
-						<button id="btnRegister" type="submit" class="btn">Register</button>
+						<input id="txtUserName" name="userName" type="text" placeholder="User Name">
+						<input id="txtUserEmail" name="password" type="email" placeholder="Email">
+						<input id="txtUserPassword" name="email" type="password" placeholder="Password">
+						<button id="btnRegister" type="submit" name="action" value="register" class="btn">Register</button>
 					</form>
 
-					<form id="adminForm" method="get" >
-						<input id="adminEmail" type="email" value="" placeholder="Email">
-						<input id="adminPassword" type="password" value="" placeholder="Password">
-						<button id="btnAdminLogin" type="submit" class="btn">Login</button>
+					<form id="adminForm" method="post" action="admin">
+						<input id="adminUserName" type="text" name="userName" value="" placeholder="userName">
+						<input id="adminPassword" type="password" name="password" value="" placeholder="Password">
+						<button id="btnAdminLogin" type="submit" name="action" value="register" class="btn">Login</button>
 					</form>
 
 				</div>
@@ -63,8 +64,12 @@
 <link rel="stylesheet" href="alert/dist/sweetalert.css">
 <script type="text/javascript">
 	var status = document.getElementById("status").value;
+	var message = document.getElementById("message").value;
 	if (status == "Error") {
-		swal("Error", "Invalid username or password", "error")
+		swal("Error", message, "error")
+	} else if (status == "created") {
+		swal("Success", message, "success")
+
 	}
 </script>
 </body>
