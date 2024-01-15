@@ -43,8 +43,8 @@
 
 					<form id="regForm" method="post" action="register">
 						<input id="txtUserName" name="userName" type="text" placeholder="User Name">
-						<input id="txtUserEmail" name="password" type="email" placeholder="Email">
-						<input id="txtUserPassword" name="email" type="password" placeholder="Password">
+						<input id="txtUserEmail" name="email" type="email" placeholder="Email">
+						<input id="txtUserPassword" name="password" type="password" placeholder="Password">
 						<button id="btnRegister" type="submit" name="action" value="register" class="btn">Register</button>
 					</form>
 
