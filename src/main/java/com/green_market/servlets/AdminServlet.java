@@ -33,8 +33,6 @@ public class AdminServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-//        JSONObject json = jsonPasser(req);
-
         String userName = req.getParameter("userName");
         String userPassword = req.getParameter("password");
         HttpSession session = req.getSession();
@@ -88,8 +86,7 @@ public class AdminServlet extends HttpServlet {
             }
             response.add("message", "invalid username or password");
             response.add("code", 404);
-//            writer.print(response.build());
-//            writer.close();
+
             session.setAttribute("status", "Error");
             session.setAttribute("message", "Invalid username or password");
             dispatcher = req.getRequestDispatcher("login.jsp");
