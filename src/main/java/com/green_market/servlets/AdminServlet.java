@@ -76,15 +76,12 @@ public class AdminServlet extends HttpServlet {
                             dispatcher = req.getRequestDispatcher("login.jsp");
                         }
                         dispatcher.forward(req, resp);
+                        connection.close();
+                        return;
 
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-
-                    writer.print(response.build());
-                    writer.close();
-                    connection.close();
-                    return;
                 }
             }
             response.add("message", "invalid username or password");
@@ -94,7 +91,6 @@ public class AdminServlet extends HttpServlet {
             session.setAttribute("message", "Invalid username or password");
             dispatcher = req.getRequestDispatcher("login.jsp");
             dispatcher.forward(req, resp);
-
             connection.close();
         }catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -30,11 +30,5 @@
 
 <jsp:include page="footer.jsp" />
 
-<script src="js/jquery-3.6.0.min.js"></script>
-<script src="js/navBar.js"></script>
-<script src="js/customerProfile.js"></script>
-<script src="js/productDetails.js"></script>
-<script src="js/adminProfile.js"></script>
-<script src="js/cart.js"></script>
 </body>
 </html>
