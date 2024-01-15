@@ -33,33 +33,39 @@
 <jsp:include page="navbar.jsp" />
 
 <!-- Loader -->
-<div id="loader" class="loader"></div>
+<%--<div id="loader" class="loader"></div>--%>
 
-<div id="Home" style="height: 100vh">
+<div id="Home">
     <div class="small-container">
 
         <div class="row row-2">
             <h2>All Product</h2>
-            <select>
-                <option>Default Shorting</option>
-                <option>Short by Price</option>
-                <option>Short by Popularity</option>
-                <option>Short by Rating</option>
-                <option>Short by Sale</option>
-            </select>
+<%--            <select>--%>
+<%--                <option>Default Shorting</option>--%>
+<%--                <option>Short by Price</option>--%>
+<%--                <option>Short by Popularity</option>--%>
+<%--                <option>Short by Rating</option>--%>
+<%--                <option>Short by Sale</option>--%>
+<%--            </select>--%>
         </div>
         <div class="row">
             <c:forEach var="todo" items="${listTodo}">
             <div class="col-4">
-                <img src="assets/images/product-1.jpg">
+                <img src="${todo.productHasImages.get(0).url}">
                 <h4><c:out value="${todo.name}" /></h4>
+
+
+                <c:set var="rating" value="${todo.ratings}" />
+
                 <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
+                    <c:forEach begin="1" end="${rating}" var="i">
+                        <i class="fas fa-star"></i>
+                    </c:forEach>
+                    <c:forEach begin="${rating + 1}" end="5" var="i">
+                        <i class="far fa-star"></i>
+                    </c:forEach>
                 </div>
+
                 <p><c:out value="${todo.price}" /></p>
             </div>
             </c:forEach>
@@ -67,20 +73,6 @@
         </div>
     </div>
 </div>
-<%--    <c:forEach var="todo" items="${listTodo}">--%>
-
-<%--        <tr>--%>
-<%--            <td><c:out value="${todo.title}" /></td>--%>
-<%--            <td><c:out value="${todo.targetDate}" /></td>--%>
-<%--            <td><c:out value="${todo.status}" /></td>--%>
-
-<%--            <td><a href="edit?id=<c:out value='${todo.id}' />">Edit</a>--%>
-<%--                &nbsp;&nbsp;&nbsp;&nbsp; <a--%>
-<%--                        href="delete?id=<c:out value='${todo.id}' />">Delete</a></td>--%>
-
-<%--            <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>--%>
-<%--                      <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->--%>
-<%--        </tr>--%>
 
 <jsp:include page="footer.jsp" />
 </body>
