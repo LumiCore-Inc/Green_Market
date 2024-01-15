@@ -16,7 +16,27 @@ public class ProductHasImage {
     @Column(name = "url", nullable = false)
     private String url;
 
-    @NotNull
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
+    public ProductHasImage() {
+    }
+
+    public ProductHasImage(Integer id, String url) {
+        this.id = id;
+        this.url = url;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }
