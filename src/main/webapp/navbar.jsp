@@ -11,8 +11,8 @@
     <nav>
         <ul>
             <li id="btnHome"><a href="index.jsp">Home</a></li>
-            <li id="btnProduct"><a href="product.jsp">Product</a></li>
-            <li id="btnAbout">About</li>
+            <li id="btnProduct"><a href="/product">Product</a></li>
+            <li id="btnAbout"><a href="/user">About</a></li>
             <li id="btnContact">Contact</li>
             <li id="btnAccount">Account</li>
         </ul>

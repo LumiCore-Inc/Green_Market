@@ -10,10 +10,13 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -130,8 +133,9 @@ public class ProductServlet extends HttpServlet {
 
     @Override// get product
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String actions = req.getServletPath();
+
         JsonObjectBuilder response = Json.createObjectBuilder();
-        PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
         try {
@@ -140,7 +144,7 @@ public class ProductServlet extends HttpServlet {
 
             String action = req.getParameter("action");
             PreparedStatement pstm = null;
-            if (Objects.equals(action, "all")) {
+            if (Objects.equals(action, null)) {
                 pstm = connection.prepareStatement("select * from products");
             } else {
                 pstm = connection.prepareStatement("select * from products where id=?");
@@ -148,10 +152,12 @@ public class ProductServlet extends HttpServlet {
             }
 
             ResultSet rst = pstm.executeQuery();
+            HttpSession session = req.getSession();
+            RequestDispatcher dispatcher = null;
 
 
             DecimalFormat df = new DecimalFormat("0.00");
-            if (Objects.equals(action, "all")) {
+            if (Objects.equals(action, null)) {
                 JsonArrayBuilder products = Json.createArrayBuilder();
                 while (rst.next()) {
                     JsonObjectBuilder product = Json.createObjectBuilder();
@@ -179,9 +185,12 @@ public class ProductServlet extends HttpServlet {
 
                     products.add(product);
                 }
-                response.add("data", products);
-                response.add("message", "success");
-                response.add("code", 200);
+//                response.add("data", products);
+//                response.add("message", "success");
+//                response.add("code", 200);
+                req.setAttribute("listTodo", products);
+                dispatcher = req.getRequestDispatcher("product.jsp");
+                dispatcher.forward(req, resp);
             } else {
                 JsonObjectBuilder product = Json.createObjectBuilder();
                 while (rst.next()) {
@@ -221,11 +230,11 @@ public class ProductServlet extends HttpServlet {
                 }
             }
 
-            writer.print(response.build());
             connection.close();
-            writer.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
         }
     }
 

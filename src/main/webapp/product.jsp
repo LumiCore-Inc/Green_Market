@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -25,73 +27,6 @@
             100% { transform: rotate(360deg); }
         }
     </style>
-    <script>
-        function loadProductData() {
-            var xhr = new XMLHttpRequest();
-            let jwt = sessionStorage.getItem("jwt");
-            var params = "action=all";
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    // Hide the loader when data is loaded
-                    document.getElementById("loader").style.display = "none";
-
-                    if (xhr.status === 200) {
-                        var productData = JSON.parse(xhr.responseText);
-                        displayProductData(productData.data);
-                    } else {
-                        // Handle errors here
-                        console.error("Error loading product data");
-                    }
-                }
-            };
-
-            // Show loader while waiting for data
-            document.getElementById("loader").style.display = "block";
-
-            xhr.open("GET", "/product?" + params, true);
-            xhr.setRequestHeader("Authorization", `Bearer ${jwt}`);
-            xhr.send();
-        }
-
-        function displayProductData(productData) {
-            var homeElement = document.getElementById("Home");
-            var productElement = document.createElement("div");
-            productElement.id = "Product";
-            productElement.innerHTML = '<div class="small-container">' +
-                '<div class="row row-2">' +
-                '<h2>All Products</h2>' +
-                '<select><option>Default Sorting</option><option>Sort by Price</option><option>Sort by Popularity</option><option>Sort by Rating</option><option>Sort by Sale</option></select></div></div>';
-            productElement.innerHTML += '<div class="main-row">'
-
-            for (var i = 0; i < productData.length; i++) {
-                productElement.innerHTML += '<div class="row">' +
-                    '<div class="col-4">' +
-                    '<img src="' + productData[i].images[0]?.url + '">' +
-                    '<h4>' + productData[i].name + '</h4>' +
-                    '<div class="rating">' + generateStars(productData[i].ratings) + '</div>' +
-                    '<p>$' + productData[i].price + '</p></div></div>';
-            }
-
-            productElement.innerHTML += '</div>><div class="page-btn"><span>1</span><span>2</span><span>3</span><span>4</span><span>&#8594;</span></div></div>';
-
-            // Append the generated content to the Home element
-            homeElement.appendChild(productElement);
-        }
-
-        function generateStars(rating) {
-            // Generate star icons based on the product rating
-            var stars = '';
-            for (var i = 0; i < 5; i++) {
-                stars += (i < rating) ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
-            }
-            return stars;
-        }
-
-        // Load product data when the page is loaded
-        window.onload = function() {
-            loadProductData();
-        };
     </script>
 </head>
 <body>
@@ -100,7 +35,53 @@
 <!-- Loader -->
 <div id="loader" class="loader"></div>
 
-<div id="Home" style="height: 100vh"></div>
+<div id="Home" style="height: 100vh">
+    <div class="small-container">
+
+        <div class="row row-2">
+            <h2>All Product</h2>
+            <select>
+                <option>Default Shorting</option>
+                <option>Short by Price</option>
+                <option>Short by Popularity</option>
+                <option>Short by Rating</option>
+                <option>Short by Sale</option>
+            </select>
+        </div>
+        <div class="row">
+            <c:forEach var="todo" items="${listTodo}">
+            <div class="col-4">
+                <img src="assets/images/product-1.jpg">
+                <h4><c:out value="${todo.name}" /></h4>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <p><c:out value="${todo.price}" /></p>
+            </div>
+            </c:forEach>
+
+        </div>
+    </div>
+</div>
+<%--    <c:forEach var="todo" items="${listTodo}">--%>
+
+<%--        <tr>--%>
+<%--            <td><c:out value="${todo.title}" /></td>--%>
+<%--            <td><c:out value="${todo.targetDate}" /></td>--%>
+<%--            <td><c:out value="${todo.status}" /></td>--%>
+
+<%--            <td><a href="edit?id=<c:out value='${todo.id}' />">Edit</a>--%>
+<%--                &nbsp;&nbsp;&nbsp;&nbsp; <a--%>
+<%--                        href="delete?id=<c:out value='${todo.id}' />">Delete</a></td>--%>
+
+<%--            <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>--%>
+<%--                      <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->--%>
+<%--        </tr>--%>
+
 <jsp:include page="footer.jsp" />
 </body>
 </html>
