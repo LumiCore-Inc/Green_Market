@@ -162,13 +162,15 @@ public class UserServlet extends HttpServlet {
                             dispatcher = req.getRequestDispatcher("login.jsp");
                         }
                         dispatcher.forward(req, resp);
+                        connection.close();
+                        return;
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
-            response.add("message", "invalid username or password");
-            response.add("code", 404);
+//            response.add("message", "invalid username or password");
+//            response.add("code", 404);
             session.setAttribute("status", "Error");
             session.setAttribute("message", "Invalid username or password");
             dispatcher = req.getRequestDispatcher("login.jsp");
