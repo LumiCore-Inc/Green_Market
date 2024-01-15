@@ -195,7 +195,7 @@ public class ProductServlet extends HttpServlet {
 //                response.add("data", products);
 //                response.add("message", "success");
 //                response.add("code", 200);
-//                req.setAttribute("listTodo", products);
+                req.setAttribute("listTodo", productList);
                 dispatcher = req.getRequestDispatcher("product.jsp");
                 dispatcher.forward(req, resp);
             } else {
