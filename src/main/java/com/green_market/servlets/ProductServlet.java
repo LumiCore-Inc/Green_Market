@@ -8,7 +8,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.json.*;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;

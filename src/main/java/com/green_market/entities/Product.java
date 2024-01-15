@@ -30,15 +30,15 @@ public class Product {
     @Column(name = "created_user", nullable = false)
     private Integer createdUser;
 
-    @NotNull
-    @Column(name = "description", nullable = false)
+    @Size(max = 255)
+    @Column(name = "description")
     private String description;
 
     @NotNull
     @Column(name = "qty", nullable = false)
     private Integer qty;
 
-    @Column(name = "description", nullable = false)
+    @OneToMany
     private List<ProductHasImage> productHasImages;
 
     public Product() {
