@@ -20,7 +20,6 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 import static com.green_market.util.EmailSender.sendEmail;
-import static com.green_market.util.JsonPasser.jsonPasser;
 
 @WebServlet(name = "registrationServlet", value = "/register")
 public class RegistrationServlet extends HttpServlet {
@@ -30,8 +29,6 @@ public class RegistrationServlet extends HttpServlet {
         JsonObjectBuilder response = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
-
-//        JSONObject json = jsonPasser(req);
 
         String userName = req.getParameter("userName");
         String userPassword = req.getParameter("password");
@@ -49,11 +46,7 @@ public class RegistrationServlet extends HttpServlet {
             while (rst.next()) {
                 Integer id = rst.getInt(1);
                 if (!Objects.equals(id, null)){
-//                    response.add("message", "username already exist");
-//                    response.add("code", 404);
-//
-//                    writer.print(response.build());
-//                    writer.close();
+
                     session.setAttribute("status", "Error");
                     session.setAttribute("message", "Username already exist");
                     dispatcher = req.getRequestDispatcher("login.jsp");
@@ -90,7 +83,6 @@ public class RegistrationServlet extends HttpServlet {
                 response.add("code", 201);
 
                 sendEmail(email, "Welcome TO Green Market","Your Account Created Success");
-//                writer.print(response.build());
                 session.setAttribute("status", "created");
                 session.setAttribute("message", "Account created successfully");
                 dispatcher = req.getRequestDispatcher("login.jsp");
