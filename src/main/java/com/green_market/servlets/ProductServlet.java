@@ -8,10 +8,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -200,41 +197,51 @@ public class ProductServlet extends HttpServlet {
                 dispatcher = req.getRequestDispatcher("product.jsp");
                 dispatcher.forward(req, resp);
             } else {
-                JsonObjectBuilder product = Json.createObjectBuilder();
-                ArrayList<Product> productList = new ArrayList<>();
 
+                Product product = null;
                 while (rst.next()) {
-                    product.add("id", rst.getInt(1));
-                    product.add("name", rst.getString(2));
-                    product.add("price", df.format(rst.getDouble(3)));
-                    product.add("ratings", rst.getDouble(4));
-                    product.add("description", rst.getString(6));
-                    product.add("qty", rst.getInt(7));
+//                    product.add("id", );
+//                    product.add("name", );
+//                    product.add("price", df.format(rst.getDouble(3)));
+//                    product.add("ratings", rst.getDouble(4));
+//                    product.add("description", rst.getString(6));
+//                    product.add("qty", rst.getInt(7));
 
                     pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
                     pstm.setObject(1, rst.getInt(1));
 
                     ResultSet resultSet = pstm.executeQuery();
-                    JsonArrayBuilder images = Json.createArrayBuilder();
 
+                    ArrayList<ProductHasImage> productHasImages = new ArrayList<>();
                     while (resultSet.next()) {
-                        JsonObjectBuilder img = Json.createObjectBuilder();
-                        img.add("id", resultSet.getInt(1));
-                        img.add("url", resultSet.getString(2));
-                        images.add(img);
+
+                        ProductHasImage productHasImage = new ProductHasImage(
+                                resultSet.getInt(1),
+                                resultSet.getString(2)
+                        );
+
+                        productHasImages.add(productHasImage);
                     }
 
-                    product.add("images", images);
+                    product = new Product(
+                            rst.getInt(1),
+                            rst.getString(2),
+                            rst.getDouble(3),
+                            rst.getDouble(4),
+                            rst.getInt(5),
+                            rst.getString(6),
+                            rst.getInt(7),
+                            productHasImages
+                    );
                 }
 
-                JsonObject build = product.build();
 
-                if (build.isEmpty()) {
+                if (Objects.equals(product , null)) {
                     response.add("message", "product not exist");
                     response.add("code", 400);
                     resp.setStatus(400);
                 } else {
-                    response.add("data", build);
+                    response.add("data", (JsonValue) product);
                     response.add("message", "success");
                     response.add("code", 200);
                 }
