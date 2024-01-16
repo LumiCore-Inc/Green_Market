@@ -33,6 +33,15 @@ public class UserServlet extends HttpServlet {
             userRegister(req, resp);
         }
     }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String action = req.getParameter("action");
+        if (action.equals("login")) {
+            userLogin(req, resp);
+        } else if (action.equals("register")) {
+            userRegister(req, resp);
+        }
+    }
 
     private void userRegister(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObjectBuilder response = Json.createObjectBuilder();

@@ -144,13 +144,13 @@ public class ProductServlet extends HttpServlet {
             BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
             Connection connection = ds.getConnection();
 
-            String action = req.getParameter("action");
+            String productId = req.getParameter("productId");
             PreparedStatement pstm = null;
-            if (Objects.equals(action, null)) {
+            if (!Objects.equals(productId, "productId")) {
                 pstm = connection.prepareStatement("select * from products");
             } else {
                 pstm = connection.prepareStatement("select * from products where id=?");
-                pstm.setObject(1, action);
+                pstm.setObject(1, productId);
             }
 
             ResultSet rst = pstm.executeQuery();
@@ -159,8 +159,9 @@ public class ProductServlet extends HttpServlet {
 
 
             DecimalFormat df = new DecimalFormat("0.00");
-            if (Objects.equals(action, null)) {
-                ArrayList<Product> productList = new ArrayList<>();                while (rst.next()) {
+            if (!Objects.equals(productId, "productId")) {
+                ArrayList<Product> productList = new ArrayList<>();
+                while (rst.next()) {
 
                     pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
                     pstm.setObject(1, rst.getInt(1));
@@ -200,6 +201,8 @@ public class ProductServlet extends HttpServlet {
                 dispatcher.forward(req, resp);
             } else {
                 JsonObjectBuilder product = Json.createObjectBuilder();
+                ArrayList<Product> productList = new ArrayList<>();
+
                 while (rst.next()) {
                     product.add("id", rst.getInt(1));
                     product.add("name", rst.getString(2));

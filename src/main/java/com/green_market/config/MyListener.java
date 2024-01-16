@@ -14,9 +14,9 @@ public class MyListener implements ServletContextListener {
 
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/green_market");
+        dataSource.setUrl("jdbc:mysql://localhost:3307/green_market");
         dataSource.setUsername("root");
-        dataSource.setPassword("1234");
+        dataSource.setPassword("root");
         servletContextEvent.getServletContext().setAttribute("ds", dataSource);
     }
 
