@@ -112,7 +112,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`id`),
   KEY `order_user_id_fk` (`user_id`),
   CONSTRAINT `order_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,6 +121,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (1,'2024-01-16 18:43:18',10,11),(2,'2024-01-16 18:50:54',10,11),(3,'2024-01-16 18:56:04',10,11),(4,'2024-01-16 19:12:49',10,11),(5,'2024-01-16 19:24:02',10,11),(6,'2024-01-16 19:26:29',10,11),(7,'2024-01-16 19:28:03',10,11),(8,'2024-01-16 19:29:06',10,11),(9,'2024-01-16 19:29:59',10,11),(10,'2024-01-16 19:30:33',10,11),(11,'2024-01-16 19:31:37',10,11),(12,'2024-01-16 19:32:26',10,11),(13,'2024-01-16 19:33:20',10,11),(14,'2024-01-16 19:33:50',10,11),(15,'2024-01-16 19:34:46',10,11),(16,'2024-01-16 19:36:31',10,11),(17,'2024-01-16 19:38:26',10,11),(18,'2024-01-16 19:38:54',10,11),(19,'2024-01-16 19:49:14',10,11),(20,'2024-01-16 19:49:37',10,11),(23,'2024-01-16 19:52:01',10,11),(25,'2024-01-16 20:19:53',10,11);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +143,7 @@ CREATE TABLE `order_details` (
   KEY `order_details_product_id_fk` (`product_id`),
   CONSTRAINT `order_details_order_id_fk` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
   CONSTRAINT `order_details_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +152,7 @@ CREATE TABLE `order_details` (
 
 LOCK TABLES `order_details` WRITE;
 /*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
+INSERT INTO `order_details` VALUES (1,17,12,50.25,10),(2,17,12,50.25,10),(3,17,12,50.25,10),(4,17,12,50.25,10),(5,18,12,50.25,1000),(6,18,12,50.25,10),(7,18,12,50.25,10),(8,18,12,50.25,10),(9,23,12,50.25,500),(10,23,2,50.25,10),(11,23,3,50.25,10),(12,23,1,50.25,10),(13,25,12,50.25,50),(14,25,2,50.25,10),(15,25,3,50.25,10),(16,25,1,50.25,10);
 /*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +208,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Product 01',4000,0,1,'ABCD',0),(2,'Product 02',4000,0,1,' ',0),(3,'Product 03',4000,0,2,' ',0),(12,'Product 04- update',500,0,2,'ABCDEND JGHG GHJG HGHJGJ',100);
+INSERT INTO `products` VALUES (1,'Product 01',4000,0,1,'ABCD',0),(2,'Product 02',4000,0,1,' ',20),(3,'Product 03',4000,0,2,' ',40),(12,'Product 04- update',500,0,2,'ABCDEND JGHG GHJG HGHJGJ',360);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,4 +251,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-09 23:49:43
+-- Dump completed on 2024-01-17  2:39:05

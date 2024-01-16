@@ -51,6 +51,7 @@
         <div class="row">
             <c:forEach var="todo" items="${listTodo}">
             <div class="col-4">
+                <a href="/product?productId=${todo.id}" >
                 <img src="${todo.productHasImages.get(0).url}">
                 <h4><c:out value="${todo.name}" /></h4>
 
@@ -67,6 +68,7 @@
                 </div>
 
                 <p><c:out value="${todo.price}" /></p>
+                </a>
             </div>
             </c:forEach>
 
