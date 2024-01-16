@@ -1,7 +1,6 @@
 package com.green_market.servlets;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.json.simple.JSONObject;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -21,7 +20,6 @@ import static com.green_market.config.Security.createJWT;
 import static com.green_market.util.AESEncryption.decrypt;
 import static com.green_market.util.AESEncryption.encrypt;
 import static com.green_market.util.EmailSender.sendEmail;
-import static com.green_market.util.JsonPasser.jsonPasser;
 
 @WebServlet(name = "userServlet", value = "/user")
 public class UserServlet extends HttpServlet {
@@ -115,7 +113,6 @@ public class UserServlet extends HttpServlet {
         HttpSession session = req.getSession();
         RequestDispatcher dispatcher = null;
 
-
         try {
             BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
             Connection connection = ds.getConnection();
@@ -129,6 +126,7 @@ public class UserServlet extends HttpServlet {
                     String password = rst.getString(7);
                     try {
                         String decrypt = decrypt(password);
+                        System.out.println(userPassword.equals(decrypt));
                         if (userPassword.equals(decrypt)) {
 
                             System.out.println(userPassword.equals(decrypt));

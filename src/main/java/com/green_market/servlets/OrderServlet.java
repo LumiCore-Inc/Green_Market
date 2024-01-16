@@ -2,6 +2,7 @@ package com.green_market.servlets;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.json.simple.JSONObject;
 
 import javax.json.Json;
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -40,6 +45,20 @@ public class OrderServlet extends HttpServlet {
             }
 
             JSONObject json = jsonPasser(req);
+
+
+//            BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
+//            Connection connection = null;
+//            try {
+//                connection = ds.getConnection();
+//
+//                PreparedStatement pstm = connection.prepareStatement("delete from Customer  where id=?", Statement.RETURN_GENERATED_KEYS);
+//                pstm.setObject(1, id);
+//                int i = pstm.executeUpdate();
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+
 
             Double total = (Double) json.get("total");
             ArrayList details = (ArrayList) json.get("details");
