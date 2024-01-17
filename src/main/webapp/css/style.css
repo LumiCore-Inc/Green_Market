@@ -46,7 +46,7 @@ p{
     min-width: 300px;
 }
 .col-2 img{
-    max-width: 50%;
+    max-width: 100%;
 }
 
 .col-2 h1{
@@ -85,7 +85,7 @@ p{
     width: 100%;
 }
 .small-container{
-    max-width: 1080px;
+    max-width: 1240px;
     margin: auto;
     padding-left: 25px;
     padding-right: 25px;
@@ -196,7 +196,11 @@ small{
     background: #04566E;
     color: #B4D330;
     font-size: 14px;
-    padding: 0px 15px 5px;}
+    padding: 0px 15px 5px;
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+}
 .footer p{
     color:  #B4D330;
 }
@@ -306,12 +310,17 @@ input:focus{
 .small-img-row{
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
-    width: 200px;
+    flex-direction: row;
 }
 .small-img-col{
-    flex-basis: 24%;
     cursor: pointer;
+}
+
+.small-img-parent{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-left: 0.5rem;
 }
 
 /*-------------------------------------Cart Page-------------------------------------*/

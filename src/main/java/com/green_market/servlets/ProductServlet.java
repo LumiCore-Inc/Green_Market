@@ -23,6 +23,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static com.green_market.config.Security.createJWT;
 import static com.green_market.config.Security.isValidJWT;
 import static com.green_market.util.JsonPasser.jsonPasser;
 
@@ -143,7 +144,7 @@ public class ProductServlet extends HttpServlet {
 
             String productId = req.getParameter("productId");
             PreparedStatement pstm = null;
-            if (!Objects.equals(productId, "productId")) {
+            if (Objects.equals(productId, null)) {
                 pstm = connection.prepareStatement("select * from products");
             } else {
                 pstm = connection.prepareStatement("select * from products where id=?");
@@ -156,7 +157,7 @@ public class ProductServlet extends HttpServlet {
 
 
             DecimalFormat df = new DecimalFormat("0.00");
-            if (!Objects.equals(productId, "productId")) {
+            if (Objects.equals(productId, null)) {
                 ArrayList<Product> productList = new ArrayList<>();
                 while (rst.next()) {
 
@@ -241,9 +242,13 @@ public class ProductServlet extends HttpServlet {
                     response.add("code", 400);
                     resp.setStatus(400);
                 } else {
-                    response.add("data", (JsonValue) product);
-                    response.add("message", "success");
-                    response.add("code", 200);
+//                    response.add("data", (JsonValue) product);
+//                    response.add("message", "success");
+//                    response.add("code", 200);
+
+                    req.setAttribute("product", product);
+                    dispatcher = req.getRequestDispatcher("productDetails.jsp");
+                    dispatcher.forward(req, resp);
                 }
             }
 

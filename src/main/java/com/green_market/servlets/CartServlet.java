@@ -23,7 +23,7 @@ import static com.green_market.config.Security.isValidJWT;
 @WebServlet(name = "cartServlet", value = "/cart")
 public class CartServlet extends HttpServlet {
 
-    @Override// add to cart
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Jws<Claims> claims = isValidJWT(req, resp);
         if (!Objects.equals(claims, null)) {

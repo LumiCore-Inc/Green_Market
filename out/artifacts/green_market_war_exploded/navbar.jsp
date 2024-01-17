@@ -6,7 +6,7 @@
 
 <div class="navBar">
     <div class="logo">
-        <a href="index.jsp"><img src="img/logo-nsbm.jpg" width="95px"></a>
+        <a href="index.jsp"><img src="img/logo-nsbm.jpg" width="170px"></a>
     </div>
     <nav>
         <ul>
