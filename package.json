@@ -1,0 +1,7 @@
+{
+  "name": "green_market",
+  "version": "1.0.0",
+  "dependencies": {
+    "firebase": "^10.7.1"
+  }
+}
