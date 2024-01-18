@@ -41,10 +41,14 @@
 						<a>Forget Password</a>
 					</form>
 
-					<form id="regForm" method="post" action="register">
-						<input id="txtUserName" name="userName" type="text" placeholder="User Name">
-						<input id="txtUserEmail" name="email" type="email" placeholder="Email">
-						<input id="txtUserPassword" name="password" type="password" placeholder="Password">
+					<form id="regForm" method="post" action="user">
+						<input id="userName" name="userName" type="text" placeholder="User Name">
+						<input id="firstName" name="firstName" type="text" placeholder="First Name">
+						<input id="lastName" name="lastName" type="text" placeholder="Last Name">
+						<input id="tp" name="tp" type="text" placeholder="Tp">
+						<input id="address" name="address" type="text" placeholder="Address">
+						<input id="password" name="password" type="password" placeholder="Password">
+						<input id="email" name="email" type="email" placeholder="Email">
 						<button id="btnRegister" type="submit" name="action" value="register" class="btn">Register</button>
 					</form>
 
