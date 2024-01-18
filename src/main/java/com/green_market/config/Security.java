@@ -51,17 +51,17 @@ public class Security {
 
     public static Jws<Claims> isValidJWT(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        String authHeader = req.getHeader("Authorization");
+        String authHeader = String.valueOf(req.getSession().getAttribute("jwt"));
         JsonObjectBuilder response = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        if (authHeader != null) {
             // Extract the token from the Authorization header
             String token = authHeader.substring(7); // Remove "Bearer " prefix
             try {
-                Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token);
-                return getIDFromJWT(token);
+                Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(authHeader);
+                return getIDFromJWT(authHeader);
             } catch (Exception e) {
 
 

@@ -27,8 +27,8 @@ import static com.green_market.config.Security.createJWT;
 import static com.green_market.config.Security.isValidJWT;
 import static com.green_market.util.JsonPasser.jsonPasser;
 
-@WebServlet(name = "productServlet", value = "/product")
-public class ProductServlet extends HttpServlet {
+@WebServlet(name = "aboutServlet", value = "/about")
+public class AboutServlet extends HttpServlet {
 
     @Override// save product
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -134,130 +134,14 @@ public class ProductServlet extends HttpServlet {
 
     @Override// get product
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        JsonObjectBuilder response = Json.createObjectBuilder();
-        PrintWriter writer = resp.getWriter();
-        resp.setContentType("application/json");
-
         try {
-            BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
-            Connection connection = ds.getConnection();
-
-            String productId = req.getParameter("productId");
-            PreparedStatement pstm = null;
-            if (Objects.equals(productId, null)) {
-                pstm = connection.prepareStatement("select * from products");
-            } else {
-                pstm = connection.prepareStatement("select * from products where id=?");
-                pstm.setObject(1, productId);
-            }
-
-            ResultSet rst = pstm.executeQuery();
-            HttpSession session = req.getSession();
             RequestDispatcher dispatcher = null;
-
-
-            DecimalFormat df = new DecimalFormat("0.00");
-            if (Objects.equals(productId, null)) {
-                ArrayList<Product> productList = new ArrayList<>();
-                while (rst.next()) {
-
-                    pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
-                    pstm.setObject(1, rst.getInt(1));
-
-                    ResultSet resultSet = pstm.executeQuery();
-                    JsonArrayBuilder images = Json.createArrayBuilder();
-
-                    ArrayList<ProductHasImage> productHasImages = new ArrayList<>();
-                    while (resultSet.next()) {
-
-                        ProductHasImage productHasImage = new ProductHasImage(
-                                resultSet.getInt(1),
-                                resultSet.getString(2)
-                        );
-
-                        productHasImages.add(productHasImage);
-                    }
-
-                    Product product = new Product(
-                            rst.getInt(1),
-                            rst.getString(2),
-                            rst.getDouble(3),
-                            rst.getDouble(4),
-                            rst.getInt(5),
-                            rst.getString(6),
-                            rst.getInt(7),
-                            productHasImages
-                    );
-
-                    productList.add(product);
-                }
-//                response.add("data", products);
-//                response.add("message", "success");
-//                response.add("code", 200);
-                req.setAttribute("listTodo", productList);
-                dispatcher = req.getRequestDispatcher("product.jsp");
-                dispatcher.forward(req, resp);
-            } else {
-
-                Product product = null;
-                while (rst.next()) {
-//                    product.add("id", );
-//                    product.add("name", );
-//                    product.add("price", df.format(rst.getDouble(3)));
-//                    product.add("ratings", rst.getDouble(4));
-//                    product.add("description", rst.getString(6));
-//                    product.add("qty", rst.getInt(7));
-
-                    pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
-                    pstm.setObject(1, rst.getInt(1));
-
-                    ResultSet resultSet = pstm.executeQuery();
-
-                    ArrayList<ProductHasImage> productHasImages = new ArrayList<>();
-                    while (resultSet.next()) {
-
-                        ProductHasImage productHasImage = new ProductHasImage(
-                                resultSet.getInt(1),
-                                resultSet.getString(2)
-                        );
-
-                        productHasImages.add(productHasImage);
-                    }
-
-                    product = new Product(
-                            rst.getInt(1),
-                            rst.getString(2),
-                            rst.getDouble(3),
-                            rst.getDouble(4),
-                            rst.getInt(5),
-                            rst.getString(6),
-                            rst.getInt(7),
-                            productHasImages
-                    );
-                }
-
-
-                if (Objects.equals(product , null)) {
-                    response.add("message", "product not exist");
-                    response.add("code", 400);
-                    resp.setStatus(400);
-                } else {
-//                    response.add("data", (JsonValue) product);
-//                    response.add("message", "success");
-//                    response.add("code", 200);
-
-                    req.setAttribute("product", product);
-                    dispatcher = req.getRequestDispatcher("productDetails.jsp");
-                    dispatcher.forward(req, resp);
-                }
-            }
-
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            dispatcher = req.getRequestDispatcher("about.jsp");
+            dispatcher.forward(req, resp);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override// update product

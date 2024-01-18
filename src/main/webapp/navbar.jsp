@@ -6,13 +6,13 @@
 
 <div class="navBar">
     <div class="logo">
-        <a href="index.jsp"><img src="img/logo-nsbm.jpg" width="95px"></a>
+        <a href="index.jsp"><img src="img/logo-nsbm.jpg" width="170px"></a>
     </div>
     <nav>
         <ul>
             <li id="btnHome"><a href="index.jsp">Home</a></li>
             <li id="btnProduct"><a href="/product">Product</a></li>
-            <li id="btnAbout"><a href="/user">About</a></li>
+            <li id="btnAbout"><a href="/about">About</a></li>
             <li id="btnContact">Contact</li>
             <li id="btnAccount">Account</li>
         </ul>

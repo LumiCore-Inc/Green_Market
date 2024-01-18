@@ -27,7 +27,6 @@
             100% { transform: rotate(360deg); }
         }
     </style>
-    </script>
 </head>
 <body>
 <jsp:include page="navbar.jsp" />
