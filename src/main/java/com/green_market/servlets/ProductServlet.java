@@ -33,7 +33,7 @@ public class ProductServlet extends HttpServlet {
     @Override// save product
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String httpMethod = String.valueOf(req.getAttribute("method"));
-        if (httpMethod.equals("GET")){
+        if (!Objects.equals(httpMethod, null) && httpMethod.equals("GET")){
             doGet(req, resp);
         } else {
             Jws<Claims> claims = isValidJWT(req, resp);
