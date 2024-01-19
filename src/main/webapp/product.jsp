@@ -50,7 +50,7 @@
         <div class="row">
             <c:forEach var="todo" items="${listTodo}">
             <div class="col-4">
-                <a href="/product?productId=${todo.id}" >
+                <a href="${pageContext.request.contextPath}/product?productId=${todo.id}" >
                 <img src="${todo.productHasImages.get(0).url}">
                 <h4><c:out value="${todo.name}" /></h4>
 

@@ -77,8 +77,6 @@
             background-color: #f2f2f2;
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
 </head>
 <body>
 
@@ -141,7 +139,8 @@
     <!-- Product details will be dynamically added here -->
     </tbody>
 </table>
-<script type="module"  src="js/firebaseConfig.js"></script>
+
+<script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/adminProduct.js"></script>
 </body>
 </html>
