@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.net.HttpURLConnection, java.net.URL, java.io.BufferedReader, java.io.InputStreamReader" %>
 <%@ page import="java.io.IOException" %>
+
 <html>
 <head>
     <title>Product Section</title>
@@ -76,6 +77,39 @@
         th {
             background-color: #f2f2f2;
         }
+
+        #productTable {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #productTable th, #productTable td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        #productTable th {
+            background-color: #f2f2f2;
+        }
+
+        #productTable img {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #productTable button {
+            cursor: pointer;
+            padding: 5px 10px;
+            margin: 2px;
+        }
+
+        #productTable button:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
@@ -120,7 +154,8 @@
     <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="previewImage()">
 
 
-    <button type="button" onclick="addProduct()">Add Product</button>
+    <button id="add-btn" type="button" onclick="addProduct()">Add Product</button>
+    <button id="update-btn" type="button" onclick="updateProduct()">Update Product</button>
 </form>
 
 <h2>Product List</h2>
@@ -133,14 +168,16 @@
         <th>Description</th>
         <th>Quantity</th>
         <th>Images</th>
+        <th>Action</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="productTableBody">
+
     <!-- Product details will be dynamically added here -->
     </tbody>
 </table>
 
-<script src="js/jquery-3.6.0.min.js"></script>
-<script src="js/adminProduct.js"></script>
-</body>
-</html>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/adminProduct.js"></script>
+    </body>
+    </html>
