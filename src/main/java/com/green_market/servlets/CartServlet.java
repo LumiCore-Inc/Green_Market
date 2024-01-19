@@ -7,11 +7,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.json.*;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -26,6 +28,12 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Jws<Claims> claims = isValidJWT(req, resp);
+        HttpSession session = req.getSession();
+        RequestDispatcher dispatcher = null;
+        HttpServletRequest productGetReq = req;
+        HttpServletResponse productResp = resp;
+
+
         if (!Objects.equals(claims, null)) {
             JsonObjectBuilder response = Json.createObjectBuilder();
             PrintWriter writer = resp.getWriter();
@@ -92,8 +100,14 @@ public class CartServlet extends HttpServlet {
                                 response.add("message", "success");
                                 response.add("code", 200);
                                 connection.close();
-                                writer.print(response.build());
-                                writer.close();
+                                session.setAttribute("status", "Success");
+                                session.setAttribute("message", "Product added to the cart!");
+                                session.setAttribute("method", "GET");
+
+                                dispatcher = req.getRequestDispatcher("/product");
+                                dispatcher.forward(req, resp);
+//                                RequestDispatcher productDispatcher = productGetReq.getRequestDispatcher(req.getContextPath() +"/product");
+//                                productDispatcher.forward(productGetReq, productResp);
                             }
                         }
                     }
@@ -123,19 +137,32 @@ public class CartServlet extends HttpServlet {
                             response.add("message", "success");
                             response.add("code", 200);
                             connection.close();
-                            writer.print(response.build());
-                            writer.close();
+                            session.setAttribute("method", "GET");
+//                            RequestDispatcher productDispatcher = productGetReq.getRequestDispatcher(req.getContextPath() +"/product");
+//                            productDispatcher.forward(productGetReq, productResp);
+                            session.setAttribute("status", "Success");
+                            session.setAttribute("message", "Product updated in the cart!");
+                            dispatcher = req.getRequestDispatcher("/product");
+                            dispatcher.forward(req, resp);
                         }
                     }else {
                         response.add("message", "product already exist in cart");
                         response.add("code", 404);
                         resp.setStatus(404);
                         connection.close();
-                        writer.print(response.build());
-                        writer.close();
+                        session.setAttribute("status", "Error");
+                        session.setAttribute("method", "GET");
+                        session.setAttribute("message", "product already exist in cart");
+                        req.setAttribute("method", "GET");
+                        dispatcher = req.getRequestDispatcher("/product");
+                        dispatcher.forward(req, resp);
+//                        RequestDispatcher productDispatcher = productGetReq.getRequestDispatcher(req.getContextPath() +"/product");
+//                        productDispatcher.forward(productGetReq, productResp);
                     }
                 }
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ServletException e) {
                 throw new RuntimeException(e);
             }
         }

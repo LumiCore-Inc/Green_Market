@@ -32,6 +32,10 @@ public class ProductServlet extends HttpServlet {
 
     @Override// save product
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String httpMethod = req.getParameter("method");
+        if (httpMethod.equals("GET")){
+            doGet(req, resp);
+        }
         Jws<Claims> claims = isValidJWT(req, resp);
         if (!Objects.equals(claims, null)) {
             JsonObjectBuilder response = Json.createObjectBuilder();
