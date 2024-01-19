@@ -103,6 +103,8 @@ public class CartServlet extends HttpServlet {
                                 session.setAttribute("status", "Success");
                                 session.setAttribute("message", "Product added to the cart!");
                                 session.setAttribute("method", "GET");
+                                session.setAttribute("productId", null);
+                                session.setAttribute("productId", null);
 
                                 dispatcher = req.getRequestDispatcher("/product");
                                 dispatcher.forward(req, resp);
@@ -140,8 +142,10 @@ public class CartServlet extends HttpServlet {
                             session.setAttribute("method", "GET");
 //                            RequestDispatcher productDispatcher = productGetReq.getRequestDispatcher(req.getContextPath() +"/product");
 //                            productDispatcher.forward(productGetReq, productResp);
-                            session.setAttribute("status", "Success");
-                            session.setAttribute("message", "Product updated in the cart!");
+                            req.setAttribute("status", "Success");
+                            req.setAttribute("message", "Product updated in the cart!");
+                            req.setAttribute("method", "GET");
+                            req.setAttribute("productId", null);
                             dispatcher = req.getRequestDispatcher("/product");
                             dispatcher.forward(req, resp);
                         }
