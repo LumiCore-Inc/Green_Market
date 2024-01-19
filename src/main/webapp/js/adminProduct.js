@@ -129,5 +129,9 @@ function addProduct() {
 
     // Clear the form inputs and reset the image preview
     document.getElementById("productForm").reset();
+    img1.src = ''
+    img2.src = ''
+    img3.src = ''
+    img4.src = ''
     document.getElementById("imagePreview").innerHTML = '';
 }
