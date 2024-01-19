@@ -32,108 +32,110 @@ public class ProductServlet extends HttpServlet {
 
     @Override// save product
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String httpMethod = req.getParameter("method");
+        String httpMethod = String.valueOf(req.getAttribute("method"));
         if (httpMethod.equals("GET")){
             doGet(req, resp);
-        }
-        Jws<Claims> claims = isValidJWT(req, resp);
-        if (!Objects.equals(claims, null)) {
-            JsonObjectBuilder response = Json.createObjectBuilder();
-            PrintWriter writer = resp.getWriter();
-            resp.setContentType("application/json");
+        } else {
+            Jws<Claims> claims = isValidJWT(req, resp);
+            if (!Objects.equals(claims, null)) {
+                JsonObjectBuilder response = Json.createObjectBuilder();
+                PrintWriter writer = resp.getWriter();
+                resp.setContentType("application/json");
 
-            JSONObject json = jsonPasser(req);
+                JSONObject json = jsonPasser(req);
 
-            String name = json.get("name").toString();
-            String price = json.get("price").toString();
-            String description = json.get("description").toString();
-            String qty = json.get("qty").toString();
+                String name = json.get("name").toString();
+                String price = json.get("price").toString();
+                String description = json.get("description").toString();
+                String qty = json.get("qty").toString();
 
-            BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
-            Connection connection = null;
-            PreparedStatement pstm = null;
-            ResultSet rst = null;
+                BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
+                Connection connection = null;
+                PreparedStatement pstm = null;
+                ResultSet rst = null;
 
-            try {
-                connection = ds.getConnection();
-                connection.setAutoCommit(false);
-
-                // Check if product name already exists
-                pstm = connection.prepareStatement("select * from products where name=?");
-                pstm.setObject(1, name);
-                rst = pstm.executeQuery();
-
-                if (rst.next()) {
-                    response.add("message", "product name already exists");
-                    response.add("code", 400);
-                    resp.setStatus(400);
-                    writer.print(response.build());
-                    return;
-                }
-
-                // Insert the new product
-                pstm = connection.prepareStatement("insert into products values(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-                pstm.setObject(1, 0);
-                pstm.setObject(2, name);
-                pstm.setObject(3, price);
-                pstm.setObject(4, 0);
-                pstm.setObject(5, claims.getBody().get("userID"));
-                pstm.setObject(6, description);
-                pstm.setObject(7, qty);
-
-                int i = pstm.executeUpdate();
-
-                if (i > 0) {
-                    ResultSet generatedKeys = pstm.getGeneratedKeys();
-                    if (generatedKeys.next()) {
-                        int generatedID = generatedKeys.getInt(1);
-
-                        // Save new images
-                        JSONArray imagesArray = (JSONArray) json.get("images");
-                        for (Object object : imagesArray) {
-                            pstm = connection.prepareStatement("insert into product_has_images values (?,?,?)");
-                            pstm.setObject(1, 0);
-                            pstm.setObject(2, object);
-                            pstm.setObject(3, generatedID);
-
-                            pstm.executeUpdate();
-                        }
-
-                        // Commit the transaction
-                        connection.commit();
-                        response.add("message", "success");
-                        response.add("code", 201);
-                        writer.print(response.build());
-                    } else {
-                        // If update fails, rollback the transaction
-                        connection.rollback();
-                        response.add("message", "failed");
-                        response.add("code", 400);
-                        writer.print(response.build());
-                    }
-                }
-            } catch (SQLException throwables) {
-                response.add("message", "failed");
-                response.add("code", 400);
-                writer.print(response.build());
-                throwables.printStackTrace();
-            } finally {
                 try {
-                    if (rst != null) {
-                        rst.close();
+                    connection = ds.getConnection();
+                    connection.setAutoCommit(false);
+
+                    // Check if product name already exists
+                    pstm = connection.prepareStatement("select * from products where name=?");
+                    pstm.setObject(1, name);
+                    rst = pstm.executeQuery();
+
+                    if (rst.next()) {
+                        response.add("message", "product name already exists");
+                        response.add("code", 400);
+                        resp.setStatus(400);
+                        writer.print(response.build());
+                        return;
                     }
-                    if (pstm != null) {
-                        pstm.close();
+
+                    // Insert the new product
+                    pstm = connection.prepareStatement("insert into products values(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    pstm.setObject(1, 0);
+                    pstm.setObject(2, name);
+                    pstm.setObject(3, price);
+                    pstm.setObject(4, 0);
+                    pstm.setObject(5, claims.getBody().get("userID"));
+                    pstm.setObject(6, description);
+                    pstm.setObject(7, qty);
+
+                    int i = pstm.executeUpdate();
+
+                    if (i > 0) {
+                        ResultSet generatedKeys = pstm.getGeneratedKeys();
+                        if (generatedKeys.next()) {
+                            int generatedID = generatedKeys.getInt(1);
+
+                            // Save new images
+                            JSONArray imagesArray = (JSONArray) json.get("images");
+                            for (Object object : imagesArray) {
+                                pstm = connection.prepareStatement("insert into product_has_images values (?,?,?)");
+                                pstm.setObject(1, 0);
+                                pstm.setObject(2, object);
+                                pstm.setObject(3, generatedID);
+
+                                pstm.executeUpdate();
+                            }
+
+                            // Commit the transaction
+                            connection.commit();
+                            response.add("message", "success");
+                            response.add("code", 201);
+                            writer.print(response.build());
+                        } else {
+                            // If update fails, rollback the transaction
+                            connection.rollback();
+                            response.add("message", "failed");
+                            response.add("code", 400);
+                            writer.print(response.build());
+                        }
                     }
-                    if (connection != null) {
-                        connection.close();
+                } catch (SQLException throwables) {
+                    response.add("message", "failed");
+                    response.add("code", 400);
+                    writer.print(response.build());
+                    throwables.printStackTrace();
+                } finally {
+                    try {
+                        if (rst != null) {
+                            rst.close();
+                        }
+                        if (pstm != null) {
+                            pstm.close();
+                        }
+                        if (connection != null) {
+                            connection.close();
+                        }
+                        writer.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                    writer.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
             }
         }
+
     }
 
     @Override// get product
@@ -147,6 +149,12 @@ public class ProductServlet extends HttpServlet {
             Connection connection = ds.getConnection();
 
             String productId = req.getParameter("productId");
+
+            String httpMethod = String.valueOf(req.getAttribute("method"));
+            if (httpMethod.equals("GET")){
+                productId = null;
+            }
+
             PreparedStatement pstm = null;
             if (Objects.equals(productId, null)) {
                 pstm = connection.prepareStatement("select * from products");
@@ -198,6 +206,8 @@ public class ProductServlet extends HttpServlet {
 //                response.add("data", products);
 //                response.add("message", "success");
 //                response.add("code", 200);
+                session.setAttribute("status", "Success");
+                session.setAttribute("message", "");
                 req.setAttribute("listTodo", productList);
                 dispatcher = req.getRequestDispatcher("product.jsp");
                 dispatcher.forward(req, resp);
@@ -251,6 +261,8 @@ public class ProductServlet extends HttpServlet {
 //                    response.add("code", 200);
 
                     req.setAttribute("product", product);
+                    session.setAttribute("status", "Success");
+                    session.setAttribute("message", "");
                     dispatcher = req.getRequestDispatcher("productDetails.jsp");
                     dispatcher.forward(req, resp);
                 }
