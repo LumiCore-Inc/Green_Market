@@ -1,5 +1,6 @@
 package com.green_market.servlets;
 
+import com.green_market.model.CartModel;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static com.green_market.config.Security.isValidJWT;
@@ -53,10 +55,10 @@ public class CartServlet extends HttpServlet {
                 ResultSet executeQuery = pstm.executeQuery();
 
                 JsonObjectBuilder product = Json.createObjectBuilder();
-                while (executeQuery.next()){
+                while (executeQuery.next()) {
                     product.add("productId", executeQuery.getInt(1));
                 }
-                if (product.build().isEmpty()){
+                if (product.build().isEmpty()) {
                     response.add("message", "product not exist");
                     response.add("code", 400);
                     resp.setStatus(400);
@@ -77,7 +79,7 @@ public class CartServlet extends HttpServlet {
 
                 JsonObject build = cart.build();
 
-                if (build.isEmpty()){
+                if (build.isEmpty()) {
                     System.out.println("create new cart and add product");
                     pstm = connection.prepareStatement("INSERT INTO cart VALUE (?,?)", Statement.RETURN_GENERATED_KEYS);
                     pstm.setObject(1, 0);
@@ -113,13 +115,13 @@ public class CartServlet extends HttpServlet {
                             }
                         }
                     }
-                }else {
+                } else {
                     System.out.println("add product into exist cart");
 
                     int cartId = Integer.parseInt(String.valueOf(build.get("id")));
                     pstm = connection.prepareStatement("SELECT * FROM cart_has_product WHERE cart_id=? and product_id=?");
-                    pstm.setObject(1,cartId);
-                    pstm.setObject(2,productId);
+                    pstm.setObject(1, cartId);
+                    pstm.setObject(2, productId);
                     ResultSet resultSet = pstm.executeQuery();
 
                     product = Json.createObjectBuilder();
@@ -127,7 +129,7 @@ public class CartServlet extends HttpServlet {
                         product.add("productId", resultSet.getInt(3));
                     }
 
-                    if (product.build().isEmpty()){
+                    if (product.build().isEmpty()) {
                         pstm = connection.prepareStatement("INSERT INTO cart_has_product VALUE (?,?,?)");
                         pstm.setObject(1, 0);
                         pstm.setObject(2, Integer.parseInt(String.valueOf(build.get("id"))));
@@ -149,7 +151,7 @@ public class CartServlet extends HttpServlet {
                             dispatcher = req.getRequestDispatcher("/product");
                             dispatcher.forward(req, resp);
                         }
-                    }else {
+                    } else {
                         response.add("message", "product already exist in cart");
                         response.add("code", 404);
                         resp.setStatus(404);
@@ -204,23 +206,27 @@ public class CartServlet extends HttpServlet {
 
                 DecimalFormat df = new DecimalFormat("0.00");
                 JsonArrayBuilder products = Json.createArrayBuilder();
+                ArrayList<CartModel> cartModels = new ArrayList<>();
                 while (rst.next()) {
-                    JsonObjectBuilder cart = Json.createObjectBuilder();
-                    cart.add("productCartId", rst.getInt(1));
-                    cart.add("productName", rst.getString(2));
-                    cart.add("price", df.format(rst.getDouble(3)));
-                    cart.add("description", rst.getString(4) == null ? "" : rst.getString(4));
-                    cart.add("imgUrl", rst.getString(5) == null ? "" : rst.getString(5));
+                    CartModel cartModel = new CartModel(
+                            rst.getInt(1),
+                            rst.getString(2),
+                            rst.getDouble(3),
+                            rst.getString(4) == null ? "" : rst.getString(4),
+                            rst.getString(5) == null ? "" : rst.getString(5)
+                    );
 
-                    products.add(cart.build());
+                    cartModels.add(cartModel);
                 }
                 connection.close();
 
+//                cartModels -  cart array
+
                 JsonArray cartBuild = products.build();
-                if (cartBuild.isEmpty()){
+                if (cartBuild.isEmpty()) {
                     response.add("message", "empty cart");
                     response.add("code", 200);
-                }else {
+                } else {
                     response.add("data", cartBuild);
                     response.add("message", "success");
                     response.add("code", 200);
@@ -228,7 +234,7 @@ public class CartServlet extends HttpServlet {
 
                 writer.print(response.build());
                 writer.close();
-            }catch (SQLException e) {
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -260,7 +266,7 @@ public class CartServlet extends HttpServlet {
 
                 writer.print(response.build());
                 writer.close();
-            }catch (SQLException e) {
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
