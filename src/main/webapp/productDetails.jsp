@@ -155,9 +155,6 @@
     var message = document.getElementById("message").value;
     if (status == "Error") {
         swal("Error", message, "error")
-    } else if (status == "Success") {
-        swal("Success", message, "success")
-
     }
 </script>
 </body>

@@ -197,8 +197,6 @@ small{
     color: #B4D330;
     font-size: 14px;
     padding: 0px 15px 5px;
-    position: fixed;
-    width: 100vw;
     bottom: 0;
 }
 .footer p{
