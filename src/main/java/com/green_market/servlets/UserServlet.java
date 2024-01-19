@@ -47,6 +47,7 @@ public class UserServlet extends HttpServlet {
         JsonObjectBuilder response = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
+        RequestDispatcher dispatcher = null;
 
         String userName = req.getParameter("userName");
         String firstName = req.getParameter("firstName");
@@ -69,9 +70,8 @@ public class UserServlet extends HttpServlet {
                     response.add("message", "username already exist");
                     response.add("code", 404);
 
-                    writer.print(response.build());
-                    writer.close();
                     connection.close();
+                    dispatcher = req.getRequestDispatcher("login.jsp");
                     return;
                 }
             }
@@ -103,10 +103,10 @@ public class UserServlet extends HttpServlet {
 
 
                 sendEmail(email, "Welcome To Green Market", content);
-                writer.print(response.build());
+                dispatcher = req.getRequestDispatcher("login.jsp");
             }
             connection.close();
-            writer.close();
+            dispatcher.forward(req, resp);
         } catch (Exception throwables) {
             throwables.printStackTrace();
         }
@@ -190,4 +190,6 @@ public class UserServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
+
 }
