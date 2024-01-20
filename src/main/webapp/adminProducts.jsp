@@ -117,7 +117,7 @@
 </head>
 <body>
 
-<h2>Add Product</h2>
+<h2 class="header-title">Add Product</h2>
 
 <form id="productForm" enctype="multipart/form-data">
     <label for="productName">Name:</label>
@@ -161,24 +161,26 @@
     <button id="update-btn" type="button" onclick="updateProduct()">Update Product</button>
 </form>
 
-<h2>Product List</h2>
+<h2 style="padding: 16px;">Product List</h2>
 
-<table id="productTable">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Quantity</th>
-        <th>Images</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody id="productTableBody">
+<div style="padding: 16px;">
+    <table id="productTable" >
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Images</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="productTableBody">
 
-    <!-- Product details will be dynamically added here -->
-    </tbody>
-</table>
+        <!-- Product details will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
 
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/adminProduct.js"></script>
