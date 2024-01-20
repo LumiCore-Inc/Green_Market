@@ -29,7 +29,6 @@ public class ProductServlet extends HttpServlet {
     @Override// get product
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObjectBuilder response = Json.createObjectBuilder();
-        PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
         try {
