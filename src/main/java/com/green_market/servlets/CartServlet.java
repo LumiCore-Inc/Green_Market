@@ -30,8 +30,6 @@ public class CartServlet extends HttpServlet {
         Jws<Claims> claims = isValidJWT(req, resp);
         HttpSession session = req.getSession();
         RequestDispatcher dispatcher = null;
-        HttpServletRequest productGetReq = req;
-        HttpServletResponse productResp = resp;
 
         if (!Objects.equals(claims, null)) {
             JsonObjectBuilder response = Json.createObjectBuilder();
@@ -106,8 +104,6 @@ public class CartServlet extends HttpServlet {
 
                                 dispatcher = req.getRequestDispatcher("/product");
                                 dispatcher.forward(req, resp);
-//                                RequestDispatcher productDispatcher = productGetReq.getRequestDispatcher(req.getContextPath() +"/product");
-//                                productDispatcher.forward(productGetReq, productResp);
                             }
                         }
                     }
@@ -138,8 +134,6 @@ public class CartServlet extends HttpServlet {
                             response.add("code", 200);
                             connection.close();
                             session.setAttribute("method", "GET");
-//                            RequestDispatcher productDispatcher = productGetReq.getRequestDispatcher(req.getContextPath() +"/product");
-//                            productDispatcher.forward(productGetReq, productResp);
                             req.setAttribute("status", "Success");
                             req.setAttribute("message", "Product updated in the cart!");
                             req.setAttribute("method", "GET");
@@ -187,6 +181,7 @@ public class CartServlet extends HttpServlet {
                     Object user = claims.getBody().get("userID");
 
                     pstm = connection.prepareStatement("SELECT\n" +
+                            "    chp.id,\n" +
                             "    p.id,\n" +
                             "    p.name,\n" +
                             "    p.price,\n" +
@@ -208,10 +203,11 @@ public class CartServlet extends HttpServlet {
                     while (rst.next()) {
                         CartModel cartModel = new CartModel(
                                 rst.getInt(1),
-                                rst.getString(2),
-                                rst.getDouble(3),
-                                rst.getString(4) == null ? "" : rst.getString(4),
-                                rst.getString(5) == null ? "" : rst.getString(5)
+                                rst.getInt(2),
+                                rst.getString(3),
+                                rst.getDouble(4),
+                                rst.getString(5) == null ? "" : rst.getString(5),
+                                rst.getString(6) == null ? "" : rst.getString(6)
                         );
 
                         cartModels.add(cartModel);
@@ -268,9 +264,6 @@ public class CartServlet extends HttpServlet {
 
                 }
                 resp.sendRedirect("/cart?method=get");
-//                req.method
-//                writer.print(response.build());
-//                writer.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

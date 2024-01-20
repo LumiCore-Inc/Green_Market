@@ -203,6 +203,10 @@ small{
     width: 70%;
     margin: auto;
 }
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+    background-color: #04566E;
+
+}
 .cart-table-action-buttons{
     button{
         cursor: pointer;

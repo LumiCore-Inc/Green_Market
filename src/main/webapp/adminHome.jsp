@@ -94,7 +94,7 @@
 <body>
 <div class="sidebar">
     <div class="logo">
-        <a href="index.jsp"><img src="img/logo-nsbm.jpg" width="140px" style="margin-left: 1rem;"></a>
+        <img src="img/logo-nsbm.jpg" width="140px" style="margin-left: 1rem;">
     </div>
     <a href="javascript:void(0);" onclick="loadContent('adminProducts.jsp')">Product</a>
     <a href="javascript:void(0);" onclick="loadContent('adminOrders.jsp')">Orders</a>
