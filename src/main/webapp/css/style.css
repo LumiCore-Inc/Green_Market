@@ -205,6 +205,7 @@ small{
 }
 .cart-table-action-buttons{
     button{
+        cursor: pointer;
         border: 0;
         background: white;
         color: blue;

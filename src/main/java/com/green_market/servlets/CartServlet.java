@@ -158,8 +158,6 @@ public class CartServlet extends HttpServlet {
                         req.setAttribute("method", "GET");
                         dispatcher = req.getRequestDispatcher("/product");
                         dispatcher.forward(req, resp);
-//                        RequestDispatcher productDispatcher = productGetReq.getRequestDispatcher(req.getContextPath() +"/product");
-//                        productDispatcher.forward(productGetReq, productResp);
                     }
                 }
             } catch (SQLException e) {

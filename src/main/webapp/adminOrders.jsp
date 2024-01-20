@@ -81,21 +81,23 @@
 </head>
 <body>
 
-<h2>Orders List</h2>
+<h2 class="header-title">Order List</h2>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Order Date</th>
-        <th>Total</th>
-        <th>Customer</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody id="ordersTableBody">
-    </tbody>
-</table>
+<div style="padding: 16px;">
+    <table >
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Order Date</th>
+            <th>Total</th>
+            <th>Customer</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="ordersTableBody">
+        </tbody>
+    </table>
+</div>
 
 <div class="modal" id="orderModal">
     <div class="modal-content">

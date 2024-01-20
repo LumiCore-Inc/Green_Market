@@ -1,8 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Green Mart | Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Market</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/common.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -14,7 +18,7 @@
             height: 100%;
             width: 250px;
             position: fixed;
-            background-color: #2c3e50; /* Background color */
+            background-color: #04566E; /* Background color */
             padding-top: 20px;
         }
 
@@ -33,7 +37,6 @@
 
         .content {
             margin-left: 250px;
-            padding: 16px;
         }
 
         h2 {
@@ -79,29 +82,26 @@
             height: 100%;
             object-fit: cover;
         }
-
+        .header-title {
+            padding: 16px;
+            background-color: #04566E;
+            color: white;
+        }
     </style>
 </head>
 
 
 <body>
 <div class="sidebar">
+    <div class="logo">
+        <a href="index.jsp"><img src="img/logo-nsbm.jpg" width="140px" style="margin-left: 1rem;"></a>
+    </div>
     <a href="javascript:void(0);" onclick="loadContent('adminProducts.jsp')">Product</a>
     <a href="javascript:void(0);" onclick="loadContent('adminOrders.jsp')">Orders</a>
     <a href="javascript:void(0);" onclick="loadContent('adminOrders.jsp')">Review Management</a>
 </div>
 
 <div class="content" >
-    <div class="top-bar">
-        <div class="label">Green Market</div>
-        <div class="user-info">
-            <div class="username" id="username"></div>
-            <div class="user-icon">
-                <!-- You can replace the src attribute with the path to your user icon image -->
-                <img src="img/default_profile.png" alt="User Icon">
-            </div>
-        </div>
-    </div>
     <div id="mainContent">
         <jsp:include page="adminProducts.jsp"/>
     </div>

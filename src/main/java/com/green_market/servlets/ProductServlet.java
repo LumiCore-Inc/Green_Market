@@ -2,13 +2,11 @@ package com.green_market.servlets;
 
 import com.green_market.entities.Product;
 import com.green_market.entities.ProductHasImage;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,6 +27,13 @@ import java.util.Objects;
 @WebServlet(name = "productServlet", value = "/product")
 public class ProductServlet extends HttpServlet {
 
+    @Override// get product
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String httpMethod = String.valueOf(req.getAttribute("method"));
+        if (httpMethod.equals("GET")){
+            doGet(req, resp);
+        }
+    }
     @Override// get product
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObjectBuilder response = Json.createObjectBuilder();
