@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-
 import static com.green_market.config.Security.isValidJWT;
 import static com.green_market.util.JsonPasser.jsonPasser;
 
@@ -35,6 +34,20 @@ public class OrderServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
         BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
+//
+//        resp.setContentType("application/json");
+//
+//        // Get the request body
+//        BufferedReader reader = req.getReader();
+//        StringBuilder requestBody = new StringBuilder();
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            requestBody.append(line);
+//        }
+//
+//        // Convert the request body to a JSON object or handle it as needed
+//        String jsonData = requestBody.toString();
+//        System.out.println("Received JSON data: " + jsonData);
 
         Connection connection = null;
         try {
@@ -53,7 +66,8 @@ public class OrderServlet extends HttpServlet {
                 }
 
                 JSONObject json = jsonPasser(req);
-                Double total = (Double) json.get("total");
+                Long total = (Long) json.get("total");
+                double v = total.doubleValue();
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode details = objectMapper.readTree(json.get("details").toString());

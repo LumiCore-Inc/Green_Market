@@ -17,7 +17,7 @@
             <li id="btnAccount"><a href="${pageContext.request.contextPath}/login.jsp">Account</a></li>
         </ul>
     </nav>
-    <img id="btnCart" src="img/icons/cart.png"style="cursor: pointer" width="30px" height="30px">
+    <a href="/cart"><img id="btnCart" src="img/icons/cart.png"style="cursor: pointer" width="30px" height="30px"></a>
 </div>
 </body>
 </html>
