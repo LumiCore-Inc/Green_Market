@@ -29,7 +29,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/green_market_war_exploded/admin"
+						"url": "http://localhost:8080/admin"
 					},
 					"response": []
 				}
@@ -58,7 +58,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/green_market_war_exploded/product"
+						"url": "http://localhost:8080/product"
 					},
 					"response": []
 				},
@@ -82,7 +82,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/green_market_war_exploded/product"
+						"url": "http://localhost:8080/product"
 					},
 					"response": []
 				},
@@ -107,7 +107,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/green_market_war_exploded/product?id=7",
+							"raw": "http://localhost:8080/product?id=7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -139,7 +139,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/green_market_war_exploded/product?action=all",
+							"raw": "http://localhost:8080/product?action=all",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -179,7 +179,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/green_market_war_exploded/user?action=login",
+							"raw": "http://localhost:8080/user?action=login",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -214,7 +214,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/green_market_war_exploded/user?action=register",
+							"raw": "http://localhost:8080/user?action=register",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -251,7 +251,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/green_market_war_exploded/cart?productId=1",
+							"raw": "http://localhost:8080/cart?productId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -283,7 +283,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/green_market_war_exploded/cart?productId=1",
+							"raw": "http://localhost:8080/cart?productId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -315,7 +315,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/green_market_war_exploded/cart?productCartId=7",
+							"raw": "http://localhost:8080/cart?productCartId=7",
 							"protocol": "http",
 							"host": [
 								"localhost"

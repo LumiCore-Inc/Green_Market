@@ -1,5 +1,5 @@
 
-let baseUrl = 'http://localhost:8081/green_market_war_exploded'
+let baseUrl = 'http://localhost:8080/'
 
 let addBtn = document.getElementById('add-btn');
 let updateBtn = document.getElementById('update-btn');
@@ -51,7 +51,7 @@ function uploadImage(file)  {
             var formData = new FormData();
             formData.append('file', file);
 
-            fetch('/green_market_war_exploded/upload', {
+            fetch('/upload', {
                 method: 'POST',
                 body: formData
             })

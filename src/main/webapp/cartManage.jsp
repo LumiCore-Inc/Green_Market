@@ -73,6 +73,7 @@
                         <c:forEach var="product" items="${cartList}" varStatus="loop">
                             {
                             "productCartId": "${product.productCartId}",
+                            "productId": "${product.productId}",
                             "productName": "${product.productName}",
                             "price": "${product.price}",
                             "description": "${product.description}",

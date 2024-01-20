@@ -1,4 +1,4 @@
-let baseUrl = 'http://localhost:8081/green_market_war_exploded'
+let baseUrl = 'http://localhost:8080/'
 function loadedScriptInit(){
     getUserDetails()
 }

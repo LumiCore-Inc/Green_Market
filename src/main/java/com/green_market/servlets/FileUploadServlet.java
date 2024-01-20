@@ -1,10 +1,5 @@
 package com.green_market.servlets;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.io.*;
 
 @WebServlet("/upload")
 @MultipartConfig
@@ -49,7 +45,7 @@ public class FileUploadServlet extends HttpServlet {
                 }
 
                 // Return the file path as a response
-                response.getWriter().write("http://localhost:8081/green_market_war_exploded/img/uploads/"+fileName);
+                response.getWriter().write("http://localhost:8080/img/uploads/"+fileName);
             }
 
         } catch (Exception e) {
