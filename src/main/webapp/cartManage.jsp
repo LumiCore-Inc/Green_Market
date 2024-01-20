@@ -8,12 +8,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UMart | Ecommerce</title>
+  <title>Green Market</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,100&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <style>
+    .footer{
+      position: fixed;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
 <jsp:include page="navbar.jsp" />
@@ -116,52 +122,34 @@
   }
 
   function placeOrder() {
-    // Get all productCount input elements
     var productCountInputs = document.querySelectorAll('[id^="productCount"]');
     var cartListJsonString = document.getElementById('hiddenInput').value;
-
     var cartList = JSON.parse(cartListJsonString);
 
-    // Check if all productCount inputs have valid values
     for (var i = 0; i < productCountInputs.length; i++) {
       var productCounts = productCountInputs[i].value;
-
       if (!isPositiveInteger(productCounts)) {
         alert('Please enter a valid product count for all products.');
         return;
       }
     }
-    var detailsArray = [];
 
-    // Iterate through cartList and productCountInputs to build the JSON object
+    var detailsArray = [];
     for (var i = 0; i < cartList.length; i++) {
       var product = cartList[i];
       var productCount = productCountInputs[i]?.value;
 
-      // Create an object for each product
       var productObject = {
-        "productId": parseInt(product.productCartId), // Change this to match your actual product ID property
-        "unitPrice": parseFloat(product.price), // Assuming product price is a string, convert to float
-        "qty": parseInt(productCount) // Assuming productCount is a string, convert to integer
+        "productId": parseInt(product.productCartId),
+        "unitPrice": parseFloat(product.price),
+        "qty": parseInt(productCount)
       };
-
-      // Add the product object to the array
       detailsArray.push(productObject);
     }
-
-    // Calculate the total price based on the detailsArray
     var total = detailsArray.reduce((acc, product) => acc + (product.unitPrice * product.qty), 0);
 
-    // Create the final JSON object
-    var orderDetails = {
-      "total": parseInt(total), // Ensure total is formatted with two decimal places
-      "details": detailsArray
-    };
+    var orderDetails = { "total": parseInt(total), "details": detailsArray };
 
-    // Log the created JSON object for debugging
-    console.log(orderDetails);
-
-    // Example: send the order only if validation passes
     var url = '/order';
     fetch(url, {
       method: 'POST',
@@ -170,9 +158,11 @@
       },
       body: JSON.stringify(orderDetails)
     })
-            .then(response => {
-              // Handle the response as needed
-              console.log(response);
+            .then(res => {
+              swal("Success", "Order placed", "success").then(() => {
+                window.location.href = 'index.jsp';
+              });
+
             })
             .catch(error => console.error('Error:', error));
   }
@@ -181,51 +171,9 @@
        var n = Math.floor(Number(str));
        return n !== Infinity && String(n) === str && n > 0;
      }
-  //
-  //  function placeOrder(productList) {
-  //    console.log("Received JSON data:", document.getElementById('hiddenInput').value);
-  //
-  //    var productCountInputs = document.querySelectorAll('[id^="productCount"]');
-  //
-  //    for (var i = 0; i < productCountInputs.length; i++) {
-  //      var productCount = productCountInputs[i].value;
-  //
-  //      if (!isPositiveInteger(productCount)) {
-  //        alert('Please enter a valid product count for all products.');
-  //        return;
-  //      }
-  //    }
-  //
-  //    function isPositiveInteger(str) {
-  //      var n = Math.floor(Number(str));
-  //      return n !== Infinity && String(n) === str && n > 0;
-  //    }
-  //
-  //    // Make an AJAX request to the EditServlet with the productId
-  //   // Replace 'EditServlet' with the actual servlet mapping for editing
-  //   // You may need to adjust the URL and handle the response accordingly
-  //   var url = '/order';
-  //   // Example using fetch API
-  //   fetch(url, {
-  //   method: 'POST',
-  //   headers: {
-  //   'Content-Type': 'application/json'
-  //   },
-  //     data: JSON.stringify(document.getElementById('hiddenInput').value)
-  // })
-  //   .then(response => {
-  //   // Handle the response as needed
-  //   console.log(response);
-  // })
-  //   .catch(error => console.error('Error:', error));
-  // }
 
     function deleteFunction(productId) {
-    // Make an AJAX request to the DeleteServlet with the productId
-    // Replace 'DeleteServlet' with the actual servlet mapping for deletion
-    // You may need to adjust the URL and handle the response accordingly
     var url = '/cart?productCartId=' + productId + '&method=delete';
-    // Example using fetch API
     fetch(url, {
     method: 'GET',
     headers: {
@@ -234,7 +182,6 @@
   })
     .then(response => {
       location.reload(true);
-    // Handle the response as needed
     console.log(response);
   })
     .catch(error => console.error('Error:', error));

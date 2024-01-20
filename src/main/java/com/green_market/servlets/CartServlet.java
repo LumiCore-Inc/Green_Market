@@ -33,7 +33,6 @@ public class CartServlet extends HttpServlet {
         HttpServletRequest productGetReq = req;
         HttpServletResponse productResp = resp;
 
-
         if (!Objects.equals(claims, null)) {
             JsonObjectBuilder response = Json.createObjectBuilder();
             PrintWriter writer = resp.getWriter();
