@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Product Section</title>
+    <link rel="stylesheet" href="css/common.css">
     <style>
         /* Add any additional styles here */
         form {
@@ -110,7 +111,9 @@
         #productTable button:hover {
             background-color: #ddd;
         }
+
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -177,7 +180,8 @@
     </tbody>
 </table>
 
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/adminProduct.js"></script>
-    </body>
-    </html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/adminProduct.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>
+</html>

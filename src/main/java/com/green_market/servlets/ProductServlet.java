@@ -99,6 +99,7 @@ public class ProductServlet extends HttpServlet {
                 req.setAttribute("listTodo", productList);
                 dispatcher = req.getRequestDispatcher("product.jsp");
                 dispatcher.forward(req, resp);
+                connection.close();
             } else {
 
                 Product product = null;
@@ -143,6 +144,7 @@ public class ProductServlet extends HttpServlet {
                     response.add("message", "product not exist");
                     response.add("code", 400);
                     resp.setStatus(400);
+                    connection.close();
                 } else {
 //                    response.add("data", (JsonValue) product);
 //                    response.add("message", "success");
@@ -151,6 +153,7 @@ public class ProductServlet extends HttpServlet {
                     req.setAttribute("product", product);
                     session.setAttribute("status", "Success");
                     session.setAttribute("message", "");
+                    connection.close();
                     dispatcher = req.getRequestDispatcher("productDetails.jsp");
                     dispatcher.forward(req, resp);
                 }

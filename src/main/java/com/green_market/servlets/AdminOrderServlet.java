@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jws;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,20 +57,32 @@ public class AdminOrderServlet extends HttpServlet {
             Connection connection = null;
             try {
                 connection = ds.getConnection();
-                PreparedStatement pstm = connection.prepareStatement("SELECT * FROM `order` where id=?");
-                pstm.setObject(1, Integer.parseInt(orderId));
-                ResultSet resultSet = pstm.executeQuery();
 
-                Order order = null;
-                while (resultSet.next()){
-                    order = new Order(
-                            resultSet.getInt(1),
-                            resultSet.getTimestamp(2),
-                            resultSet.getDouble(3)
-                    );
+                PreparedStatement pstm = connection.prepareStatement("select od.id,\n" +
+                        "       p.name ,\n" +
+                        "       od.qty,\n" +
+                        "       od.unit_price,\n" +
+                        "       (select url from product_has_images where product_id = od.product_id limit 1)\n" +
+                        "from order_details od\n" +
+                        "    LEFT JOIN green_market.products p\n" +
+                        "        on od.product_id = p.id where od.order_id=?");
+                pstm.setObject(1, Integer.parseInt(orderId));
+                ResultSet resultSet1 = pstm.executeQuery();
+
+                JsonArrayBuilder details = Json.createArrayBuilder();
+                while (resultSet1.next()){
+                    JsonObjectBuilder detail = Json.createObjectBuilder();
+
+                    detail.add("detailId",resultSet1.getInt(1));
+                    detail.add("productName",resultSet1.getString(2));
+                    detail.add("qty",resultSet1.getDouble(3));
+                    detail.add("unitPrice",resultSet1.getDouble(4));
+                    detail.add("img",resultSet1.getString(5));
+
+                    details.add(detail);
                 }
 
-                if (Objects.equals(order, null)){
+                if (Objects.equals(details, null)){
                     response.add("message", "order not exist");
                     response.add("code", 400);
                     resp.setStatus(400);
@@ -77,9 +90,9 @@ public class AdminOrderServlet extends HttpServlet {
                     writer.close();
                 }else {
 
-                    System.out.println(order.toString());
+                    System.out.println(details.toString());
 
-                    response.add("data", "");
+                    response.add("data", details);
                     response.add("message", "success");
                     response.add("code", 200);
                     writer.print(response.build());
@@ -99,7 +112,6 @@ public class AdminOrderServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-
         if (!Objects.equals(claims, null)) {
             Object user = claims.getBody().get("userID");
 
@@ -115,26 +127,34 @@ public class AdminOrderServlet extends HttpServlet {
             Connection connection = null;
             try {
                 connection = ds.getConnection();
-                PreparedStatement pstm = connection.prepareStatement("SELECT * FROM `order`");
+                PreparedStatement pstm = connection.prepareStatement("SELECT \n" +
+                        "    o.id,\n" +
+                        "    o.order_date,\n" +
+                        "    o.total, \n" +
+                        "    CONCAT(u.first_name ,' ', u.last_name) \n" +
+                        "FROM `order` o \n" +
+                        "    LEFT JOIN users u on `o`.user_id = u.id");
                 ResultSet resultSet = pstm.executeQuery();
 
-                ArrayList<Order> orders = new ArrayList<>();
+                JsonArrayBuilder orders = Json.createArrayBuilder();
                 while (resultSet.next()){
-                    Order order = new Order(
-                            resultSet.getInt(1),
-                            resultSet.getTimestamp(2),
-                            resultSet.getDouble(3)
-                    );
+                    JsonObjectBuilder order = Json.createObjectBuilder();
+                    order.add("id", resultSet.getInt(1));
+                    order.add("orderDate", resultSet.getTimestamp(2).toString());
+                    order.add("total", resultSet.getDouble(3));
+                    order.add("customer", resultSet.getString(4));
+
                     orders.add(order);
                 }
 
                 System.out.println(orders.toString());
 
-                response.add("data", "");
+                response.add("data", orders);
                 response.add("message", "success");
                 response.add("code", 200);
                 writer.print(response.build());
                 writer.close();
+                connection.close();
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);

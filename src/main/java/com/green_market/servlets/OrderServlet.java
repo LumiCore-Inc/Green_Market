@@ -67,6 +67,7 @@ public class OrderServlet extends HttpServlet {
 
                 ResultSet generatedKeys = pstm.getGeneratedKeys();
                 if (generatedKeys.next()) {
+
                     int generatedID = generatedKeys.getInt(1);
 
                     for (JsonNode product :details) {
@@ -89,12 +90,15 @@ public class OrderServlet extends HttpServlet {
                                 connection.rollback();
                                 return; // Rollback transaction
                             } else {
+                                System.out.println("plase");
                                 pstm = connection.prepareStatement("UPDATE products set qty=? where id=?");
                                 pstm.setObject(1, qty - orderQty.asDouble());
                                 pstm.setObject(2, productId.asInt());
                                 int i1 = pstm.executeUpdate();
 
-                                if (i1 <= 0){
+                                System.out.println(i1);
+
+                                if (i1 == 0){
                                     response.add("message", "something went wrong");
                                     response.add("code", 400);
                                     resp.setStatus(400);
@@ -114,7 +118,9 @@ public class OrderServlet extends HttpServlet {
                         pstm.setObject(5, orderQty.asDouble());
                         int update = pstm.executeUpdate();
 
-                        if (update <= 0){
+                        System.out.println(update);
+
+                        if (update == 0){
                             response.add("message", "something went wrong");
                             response.add("code", 400);
                             resp.setStatus(400);
@@ -122,16 +128,16 @@ public class OrderServlet extends HttpServlet {
                             writer.close();
                             connection.rollback();
                             return; // Rollback transaction
-                        }else {
-                            response.add("message", "success");
-                            response.add("code", 201);
-                            resp.setStatus(201);
-                            writer.print(response.build());
-                            writer.close();
                         }
                     }
 
                     connection.commit(); // Commit transaction since everything is successful
+
+                    response.add("message", "success");
+                    response.add("code", 201);
+                    resp.setStatus(201);
+                    writer.print(response.build());
+                    writer.close();
                 }
             } else {
                 response.add("message", "Unauthorized Request");

@@ -85,12 +85,14 @@ public class AdminProductServlet extends HttpServlet {
                         // Save new images
                         JSONArray imagesArray = (JSONArray) json.get("images");
                         for (Object object : imagesArray) {
-                            pstm = connection.prepareStatement("insert into product_has_images values (?,?,?)");
-                            pstm.setObject(1, 0);
-                            pstm.setObject(2, object);
-                            pstm.setObject(3, generatedID);
+                            if (!Objects.equals(object, null)){
+                                pstm = connection.prepareStatement("insert into product_has_images values (?,?,?)");
+                                pstm.setObject(1, 0);
+                                pstm.setObject(2, object);
+                                pstm.setObject(3, generatedID);
 
-                            pstm.executeUpdate();
+                                pstm.executeUpdate();
+                            }
                         }
 
                         // Commit the transaction
@@ -285,12 +287,14 @@ public class AdminProductServlet extends HttpServlet {
                     // Save new images
                     JSONArray imagesArray = (JSONArray) json.get("images");
                     for (Object object : imagesArray) {
-                        pstm = connection.prepareStatement("insert into product_has_images values (?,?,?)");
-                        pstm.setObject(1, 0);
-                        pstm.setObject(2, object);
-                        pstm.setObject(3, id);
+                        if (!Objects.equals(object, null)){
+                            pstm = connection.prepareStatement("insert into product_has_images values (?,?,?)");
+                            pstm.setObject(1, 0);
+                            pstm.setObject(2, object);
+                            pstm.setObject(3, id);
 
-                        pstm.executeUpdate();
+                            pstm.executeUpdate();
+                        }
                     }
 
                     // Commit the transaction

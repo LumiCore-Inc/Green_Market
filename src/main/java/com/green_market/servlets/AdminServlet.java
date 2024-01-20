@@ -63,8 +63,11 @@ public class AdminServlet extends HttpServlet {
                             response.add("message", "success");
                             response.add("code", 200);
 
+                            System.out.println(jwt);
+
                             session.setAttribute("name", rst.getString(3));
                             session.setAttribute("jwt", jwt);
+                            session.setAttribute("username", rst.getString(2));
                             session.setAttribute("status", "Success");
                             dispatcher = req.getRequestDispatcher("adminHome.jsp");
 
