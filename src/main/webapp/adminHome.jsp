@@ -88,6 +88,7 @@
 <div class="sidebar">
     <a href="javascript:void(0);" onclick="loadContent('adminProducts.jsp')">Product</a>
     <a href="javascript:void(0);" onclick="loadContent('adminOrders.jsp')">Orders</a>
+    <a href="javascript:void(0);" onclick="loadContent('adminOrders.jsp')">Review Management</a>
 </div>
 
 <div class="content" >

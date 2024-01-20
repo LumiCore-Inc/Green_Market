@@ -1,7 +1,5 @@
 package com.green_market.servlets;
 
-import com.green_market.entities.Product;
-import com.green_market.entities.ProductHasImage;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -15,15 +13,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.green_market.config.Security.createJWT;
 import static com.green_market.config.Security.isValidJWT;
 import static com.green_market.util.JsonPasser.jsonPasser;
 
