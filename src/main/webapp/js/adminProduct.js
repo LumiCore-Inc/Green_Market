@@ -207,9 +207,9 @@ function deleteProduct(productID){
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
-        text: 'You are about to update the product.',
+        text: 'You are about to delete the product.',
         showCancelButton: true,
-        confirmButtonText: 'Yes, update it!',
+        confirmButtonText: 'Yes, delete it!',
         cancelButtonText: 'No, cancel!',
     }).then((result) => {
         if (result.isConfirmed) {
