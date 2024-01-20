@@ -10,14 +10,14 @@
     </div>
     <nav>
         <ul>
-            <li id="btnHome"><a href="index.jsp">Home</a></li>
+            <li id="btnHome"><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
             <li id="btnProduct"><a href="${pageContext.request.contextPath}/product">Product</a></li>
-            <li id="btnAbout"><a href="/about">About</a></li>
+            <li id="btnAbout"><a href="${pageContext.request.contextPath}/about">About</a></li>
             <li id="btnContact">Contact</li>
             <li id="btnAccount"><a href="${pageContext.request.contextPath}/login.jsp">Account</a></li>
         </ul>
     </nav>
-    <a href="/cart"><img id="btnCart" src="img/icons/cart.png"style="cursor: pointer" width="30px" height="30px"></a>
+    <a href="${pageContext.request.contextPath}/cart"><img id="btnCart" src="img/icons/cart.png"style="cursor: pointer" width="30px" height="30px"></a>
 </div>
 </body>
 </html>
