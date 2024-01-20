@@ -199,6 +199,18 @@ small{
     padding: 0px 15px 5px;
     bottom: 0;
 }
+.cart-table{
+    width: 70%;
+    margin: auto;
+}
+.cart-table-action-buttons{
+    button{
+        border: 0;
+        background: white;
+        color: blue;
+        margin: auto;
+    }
+}
 .footer p{
     color:  #B4D330;
 }
@@ -435,6 +447,15 @@ form input{
     margin: 10px 0;
     padding: 0 10px;
     border: 1px solid #ccc;
+}
+.cart-table{
+    input{
+        width: 35%;
+        height: 30px;
+        margin: 10px 0;
+        padding: 0 10px;
+        border: 1px solid #ccc;
+    }
 }
 form .btn{
     width: 100%;

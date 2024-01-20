@@ -4,8 +4,6 @@ import com.green_market.model.CartModel;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import javax.json.*;
 import javax.servlet.RequestDispatcher;
@@ -106,7 +104,6 @@ public class CartServlet extends HttpServlet {
                                 session.setAttribute("message", "Product added to the cart!");
                                 session.setAttribute("method", "GET");
                                 session.setAttribute("productId", null);
-                                session.setAttribute("productId", null);
 
                                 dispatcher = req.getRequestDispatcher("/product");
                                 dispatcher.forward(req, resp);
@@ -177,67 +174,76 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Jws<Claims> claims = isValidJWT(req, resp);
-        if (!Objects.equals(claims, null)) {
-            JsonObjectBuilder response = Json.createObjectBuilder();
-            PrintWriter writer = resp.getWriter();
-            resp.setContentType("application/json");
+        String action = req.getParameter("method");
+        if (!Objects.equals(null, action) && action.equals("delete")) {
+            doDelete(req, resp);
+        } else {
+            if (!Objects.equals(claims, null)) {
+                JsonObjectBuilder response = Json.createObjectBuilder();
+                PrintWriter writer = resp.getWriter();
+                resp.setContentType("application/json");
 
-            BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
-            PreparedStatement pstm;
-            try {
-                Connection connection = ds.getConnection();
-                Object user = claims.getBody().get("userID");
+                BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
+                PreparedStatement pstm;
+                try {
+                    Connection connection = ds.getConnection();
+                    Object user = claims.getBody().get("userID");
 
-                pstm = connection.prepareStatement("SELECT\n" +
-                        "    chp.id,\n" +
-                        "    p.name,\n" +
-                        "    p.price,\n" +
-                        "    p.description,\n" +
-                        "    (SELECT url FROM product_has_images WHERE product_id = p.id LIMIT 1)\n" +
-                        "FROM\n" +
-                        "    products p\n" +
-                        "        LEFT JOIN cart_has_product chp\n" +
-                        "            ON p.id = chp.product_id\n" +
-                        "        LEFT JOIN cart c\n" +
-                        "            ON c.id = chp.cart_id\n" +
-                        "WHERE c.user_id=? GROUP BY chp.id");
-                pstm.setObject(1, user);
-                ResultSet rst = pstm.executeQuery();
+                    pstm = connection.prepareStatement("SELECT\n" +
+                            "    p.id,\n" +
+                            "    p.name,\n" +
+                            "    p.price,\n" +
+                            "    p.description,\n" +
+                            "    (SELECT url FROM product_has_images WHERE product_id = p.id LIMIT 1)\n" +
+                            "FROM\n" +
+                            "    products p\n" +
+                            "        LEFT JOIN cart_has_product chp\n" +
+                            "            ON p.id = chp.product_id\n" +
+                            "        LEFT JOIN cart c\n" +
+                            "            ON c.id = chp.cart_id\n" +
+                            "WHERE c.user_id=? GROUP BY chp.id");
+                    pstm.setObject(1, user);
+                    ResultSet rst = pstm.executeQuery();
 
-                DecimalFormat df = new DecimalFormat("0.00");
-                JsonArrayBuilder products = Json.createArrayBuilder();
-                ArrayList<CartModel> cartModels = new ArrayList<>();
-                while (rst.next()) {
-                    CartModel cartModel = new CartModel(
-                            rst.getInt(1),
-                            rst.getString(2),
-                            rst.getDouble(3),
-                            rst.getString(4) == null ? "" : rst.getString(4),
-                            rst.getString(5) == null ? "" : rst.getString(5)
-                    );
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    JsonArrayBuilder products = Json.createArrayBuilder();
+                    ArrayList<CartModel> cartModels = new ArrayList<>();
+                    while (rst.next()) {
+                        CartModel cartModel = new CartModel(
+                                rst.getInt(1),
+                                rst.getString(2),
+                                rst.getDouble(3),
+                                rst.getString(4) == null ? "" : rst.getString(4),
+                                rst.getString(5) == null ? "" : rst.getString(5)
+                        );
 
-                    cartModels.add(cartModel);
-                }
-                connection.close();
+                        cartModels.add(cartModel);
+                    }
+                    connection.close();
 
 //                cartModels -  cart array
 
-                JsonArray cartBuild = products.build();
-                if (cartBuild.isEmpty()) {
-                    response.add("message", "empty cart");
-                    response.add("code", 200);
-                } else {
-                    response.add("data", cartBuild);
-                    response.add("message", "success");
-                    response.add("code", 200);
-                }
+                    JsonArray cartBuild = products.build();
+                    if (cartBuild.isEmpty()) {
+                        response.add("message", "empty cart");
+                        response.add("code", 200);
+                    } else {
+                        response.add("data", cartBuild);
+                        response.add("message", "success");
+                        response.add("code", 200);
+                    }
 
-                writer.print(response.build());
-                writer.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                    HttpSession session = req.getSession();
+                    RequestDispatcher dispatcher = null;
+                    req.setAttribute("cartList", cartModels);
+                    dispatcher = req.getRequestDispatcher("cartManage.jsp");
+                    dispatcher.forward(req, resp);
+                } catch (SQLException | ServletException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
+
     }
 
     @Override
@@ -262,10 +268,12 @@ public class CartServlet extends HttpServlet {
                 if (i > 0) {
                     response.add("message", "success");
                     response.add("code", 200);
-                }
 
-                writer.print(response.build());
-                writer.close();
+                }
+                resp.sendRedirect("/cart?method=get");
+//                req.method
+//                writer.print(response.build());
+//                writer.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
