@@ -18,7 +18,7 @@
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #7f7f7f;
         }
 
         button {
