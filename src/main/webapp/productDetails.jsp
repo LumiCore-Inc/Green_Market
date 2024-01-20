@@ -46,53 +46,8 @@
                 <div class="col-2" style="flex-basis: 35%;">
                     <h1 id="ProductDetailsName">${product.name}</h1>
                     <h4 id="ProductDetailsPrice">${product.price}</h4>
-                    <select id="selectSize">
-                        <option>Select Size</option>
-                        <option>XXL</option>
-                        <option>XL</option>
-                        <option>Large</option>
-                        <option>Medium</option>
-                        <option>Small</option>
-                    </select>
                     <input type="hidden" id="status" value="<%= (request.getSession().getAttribute("status") != null) ? request.getSession().getAttribute("status") : "" %>">
                     <input type="hidden" id="message" value="<%= (request.getSession().getAttribute("message") != null) ? request.getSession().getAttribute("message") : "Something went wrong!" %>">
-
-                    <script>
-                        function setHeaders() {
-
-                            var jwtToken = document.getElementById('jwt').value;
-
-                            console.log(jwtToken)
-
-                            console.log("call")
-                            console.log(session.getAttribute("jwt"))
-                            // Get the value you want to set in the header
-                            var jwtToken = session.getAttribute("jwt");
-
-
-                            console.log(jwtToken)
-
-                            // Create a new XMLHttpRequest object
-                            var xhr = new XMLHttpRequest();
-
-                            // Set a custom header
-                            xhr.setRequestHeader('Authentication', 'Bearer '+jwtToken);
-
-
-                            console.log(xhr)
-
-                            // Open a connection to the server
-                            xhr.open('POST', "${pageContext.request.contextPath}/cart?productId=${product.id}", true);
-
-
-
-                            // Send the form data
-                            xhr.send(new FormData(document.getElementById('cartForm')));
-
-                            // Prevent the form from being submitted through the default method
-                            return false;
-                        }
-                    </script>
 
                     <form id="cartForm" method="post" action="${pageContext.request.contextPath}/cart?productId=${product.id}" onsubmit="setHeaders()" >
                         <input type="hidden" name="Authentication" value="${session.getAttribute("jwt")}">
@@ -116,6 +71,56 @@
     var message = document.getElementById("message").value;
     if (status == "Error") {
         swal("Error", message, "error")
+    }
+
+    function setHeaders() {
+
+        <%--var jwtToken = document.getElementById('jwt').value;--%>
+
+        <%--console.log(jwtToken)--%>
+
+        <%--console.log("call")--%>
+        <%--console.log(session.getAttribute("jwt"))--%>
+        <%--// Get the value you want to set in the header--%>
+        <%--var jwtToken = session.getAttribute("jwt");--%>
+
+
+        <%--console.log(jwtToken)--%>
+
+        <%--// Create a new XMLHttpRequest object--%>
+        <%--var xhr = new XMLHttpRequest();--%>
+
+        <%--// Set a custom header--%>
+        <%--xhr.setRequestHeader('Authentication', 'Bearer '+jwtToken);--%>
+
+
+        <%--console.log(xhr)--%>
+
+        <%--// Open a connection to the server--%>
+        <%--xhr.open('POST', "${pageContext.request.contextPath}/cart?productId=${product.id}", true);--%>
+
+
+
+        <%--// Send the form data--%>
+        <%--xhr.send(new FormData(document.getElementById('cartForm')));--%>
+
+        <%--// Prevent the form from being submitted through the default method--%>
+        <%--return false;--%>
+
+        var url = '/cart?productId=${product.id}';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(res => {
+                swal("Success", "Order placed", "success").then(() => {
+                    window.location.href = 'index.jsp';
+                });
+
+            })
+            .catch(error => console.error('Error:', error));
     }
 </script>
 </body>

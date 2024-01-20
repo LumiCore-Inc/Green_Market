@@ -2,6 +2,7 @@ package com.green_market.model;
 
 public class CartModel {
     private int productCartId;
+    private int productId;
     private String productName;
     private Double price;
     private String description;
@@ -10,8 +11,9 @@ public class CartModel {
     public CartModel() {
     }
 
-    public CartModel(int productCartId, String productName, Double price, String description, String imgUrl) {
+    public CartModel(int productCartId, int productId, String productName, Double price, String description, String imgUrl) {
         this.productCartId = productCartId;
+        this.productId = productId;
         this.productName = productName;
         this.price = price;
         this.description = description;
@@ -24,6 +26,14 @@ public class CartModel {
 
     public void setProductCartId(int productCartId) {
         this.productCartId = productCartId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getProductName() {
