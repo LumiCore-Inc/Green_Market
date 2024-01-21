@@ -1,13 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.net.HttpURLConnection, java.net.URL, java.io.BufferedReader, java.io.InputStreamReader" %>
-<%@ page import="java.io.IOException" %>
 
 <html>
 <head>
     <title>Product Section</title>
 <%--    <link rel="stylesheet" href="css/common.css">--%>
     <style>
-        /* Add any additional styles here */
         form {
             max-width: 400px;
             margin: 20px auto;
@@ -62,7 +59,6 @@
             background-color: #2980b9;
         }
 
-        /* Table styles */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -176,8 +172,6 @@
         </tr>
         </thead>
         <tbody id="productTableBody">
-
-        <!-- Product details will be dynamically added here -->
         </tbody>
     </table>
 </div>

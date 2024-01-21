@@ -8,7 +8,6 @@
     <title>Green Market</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/common.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,100&display=swap" rel="stylesheet">
@@ -33,21 +32,11 @@
 <body>
 <jsp:include page="navbar.jsp" />
 
-<!-- Loader -->
-<%--<div id="loader" class="loader"></div>--%>
-
 <div id="Home">
     <div class="small-container">
 
         <div class="row row-2">
             <h2>All Product</h2>
-<%--            <select>--%>
-<%--                <option>Default Shorting</option>--%>
-<%--                <option>Short by Price</option>--%>
-<%--                <option>Short by Popularity</option>--%>
-<%--                <option>Short by Rating</option>--%>
-<%--                <option>Short by Sale</option>--%>
-<%--            </select>--%>
         </div>
         <div class="row">
             <c:forEach var="todo" items="${listTodo}">
@@ -55,7 +44,6 @@
                 <a href="${pageContext.request.contextPath}/product?productId=${todo.id}" >
                 <img src="${todo.productHasImages.get(0).url}">
                 <h4><c:out value="${todo.name}" /></h4>
-
 
                 <c:set var="rating" value="${todo.ratings}" />
 
@@ -72,11 +60,9 @@
                 </a>
             </div>
             </c:forEach>
-
         </div>
     </div>
 </div>
-
 <jsp:include page="footer.jsp" />
 </body>
 </html>

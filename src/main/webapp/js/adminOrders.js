@@ -1,7 +1,7 @@
 // export function getAllOrders(){
 //     $.ajax({
 //         method:'GET',
-//         url:`http://localhost:8081/green_market_war_exploded/admin-order?action=all`,
+//         url:`http://localhost:8081/admin-order?action=all`,
 //         headers: {
 //             Authorization: "Bearer "+sessionStorage.getItem('jwt')
 //         },

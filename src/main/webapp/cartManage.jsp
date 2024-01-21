@@ -1,7 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.green_market.entities.Product" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
@@ -28,8 +26,6 @@
 <jsp:include page="navbar.jsp"/>
 <div id="Home" style="width: -webkit-fill-available;">
     <div id="ProductDetails">
-
-        <%--    <form method="post" action="order" class="cart-table">--%>
         <div class="cart-table">
             <table>
                 <thead>
@@ -54,7 +50,6 @@
                                    required="required"
                                    onchange="claculateTotal()"></td>
                         <td class="cart-table-action-buttons">
-                                <%--              <a href="${pageContext.request.contextPath}/cart?productId=${product.productCartId}&method=delete"><button>Delete</button></a>--%>
                             <button onclick="confirmDelete(${product.productCartId})">Delete</button>
                         </td>
                     </tr>
@@ -66,7 +61,6 @@
                 <h3 id="totalValue" style="margin-left: 15px;"></h3>
             </div>
             <div style="display: flex;justify-content: end;">
-                <%--        <button style="width: 20%;" type="submit" name="action" value="register" class="btn">Place Order</button>--%>
                 <div style="display: flex;justify-content: end;">
                     <c:set var="cartListJson">
                         [
@@ -83,19 +77,10 @@
                         ]
                     </c:set>
                     <input id="hiddenInput" type="hidden" name="id" value="<c:out value='${cartListJson}' />"/>
-
-
                 </div>
                 <button style="width: 20%;" onclick="placeOrder()" class="btn">Place Order</button>
-
-
-                <%--  <input type="button" onclick="placeOrder()" placeholder="Place Order">--%>
-
-
             </div>
         </div>
-        <%--    </form>--%>
-
     </div>
 </div>
 
@@ -169,7 +154,6 @@
         }
         var total = detailsArray.reduce((acc, product) => acc + (product.unitPrice * product.qty), 0);
 
-        console.log('total', total, isNaN(total))
         if (!isNaN(total)) {
             const totalElement = document.getElementById("total");
             const totalValue = document.getElementById("totalValue");
@@ -215,7 +199,6 @@
             if (result.isConfirmed) {
                 deleteFunction(productId);
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                // User clicked "No, cancel!"
                 Swal.fire('Cancelled', 'Product remove was cancelled.', 'info');
             }
         });
