@@ -5,39 +5,39 @@
     <style>
         .modal {
             display: none;
-            position: fixed!important;
-            z-index: 1!important;
-            left: 0!important;
-            top: 0!important;
+            position: fixed !important;
+            z-index: 1 !important;
+            left: 0 !important;
+            top: 0 !important;
             width: 100% !important;
             height: 100% !important;
-            background-color: rgba(0,0,0,0.7) !important;
-            justify-content: center!important;
-            align-items: center!important;
+            background-color: rgba(0, 0, 0, 0.7) !important;
+            justify-content: center !important;
+            align-items: center !important;
         }
 
         .modal-content {
-            background-color: #fefefe!important;
-            margin: 10% auto!important;
-            padding: 20px!important;
-            border: 1px solid #888!important;
+            background-color: #fefefe !important;
+            margin: 10% auto !important;
+            padding: 20px !important;
+            border: 1px solid #888 !important;
             width: 80% !important;
-            overflow-y: scroll!important;
+            overflow-y: scroll !important;
             height: 80% !important;
         }
 
         .close {
-            color: #aaa!important;
-            float: right!important;
-            font-size: 28px!important;
-            font-weight: bold!important;
+            color: #aaa !important;
+            float: right !important;
+            font-size: 28px !important;
+            font-weight: bold !important;
         }
 
         .close:hover,
         .close:focus {
-            color: black!important;
-            text-decoration: none!important;
-            cursor: pointer!important;
+            color: black !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
         }
 
         table {
@@ -73,30 +73,34 @@
             background-color: #ddd;
         }
 
-        .navBar{
+        .navBar {
             display: flex;
             align-items: center;
             padding: 5px 20px;
             border-bottom: 1px solid #cfcfcf;
         }
-        nav{
+
+        nav {
             flex: 1;
             text-align: right;
         }
-        nav ul{
+
+        nav ul {
             display: inline-block;
             list-style-type: none;
         }
-        nav ul li{
+
+        nav ul li {
             display: inline-block;
             margin-right: 20px;
             cursor: pointer;
             color: #04566E;
             font-weight: 600;
         }
-        a{
-            text-decoration: none!important;
-            color: #555!important;
+
+        a {
+            text-decoration: none !important;
+            color: #555 !important;
         }
     </style>
     <link rel="stylesheet" href="css/common.css">
@@ -121,9 +125,10 @@
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" width="150px"  src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                <img class="rounded-circle mt-5" width="150px"
+                     src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
                 <span
-                    class="font-weight-bold" id="username"></span><span
+                        class="font-weight-bold" id="username"></span><span
                     class="text-black-50" id="email"></span><span> </span></div>
         </div>
         <div class="col-md-9 border-right">
@@ -132,33 +137,47 @@
                     <h4 class="text-right">Profile Info</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Email</label><input id="email-input" type="email" class="form-control"
-                                                                                   placeholder="Email" >
+                    <div class="col-md-6"><label class="labels">Email</label>
+                        <input id="email-input" type="email"
+                               class="form-control"
+                               placeholder="Email">
                     </div>
-                    <div class="col-md-6"><label class="labels">Password</label><input id="password" type="password" class="form-control"
-                                                                                      value="" placeholder="password">
+                    <div class="col-md-6"><label class="labels">Password</label>
+                        <input id="password" type="password"
+                               class="form-control"
+                               value="" placeholder="password">
                     </div>
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">First name</label><input type="text" class="form-control" id="firstName"
-                                                                                      placeholder="First name" value="">
+                    <div class="col-md-6"><label class="labels">First name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="firstName"
+                               placeholder="First name"
+                               value="">
                     </div>
-                    <div class="col-md-6"><label class="labels">Last name</label><input type="text" id="lastName"
-                                                                                           class="form-control" value=""
-                                                                                           placeholder="Last name"></div>
+                    <div class="col-md-6"><label class="labels">Last name</label>
+                        <input type="text" id="lastName"
+                               class="form-control" value=""
+                               placeholder="Last name"></div>
                 </div>
 
                 <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">T.p</label><input id="tp" type="text" class="form-control"
-                                                                                      placeholder="TP" value="">
+                    <div class="col-md-6"><label class="labels">T.p</label>
+                        <input id="tp" type="text"
+                               class="form-control"
+                               placeholder="TP" value="">
                     </div>
-                    <div class="col-md-6"><label class="labels">Address</label><input type="text" id="address"
-                                                                                           class="form-control" value=""
-                                                                                           placeholder="address"></div>
+                    <div class="col-md-6"><label class="labels">Address</label>
+                        <input type="text" id="address"
+                               class="form-control" value=""
+                               placeholder="address"></div>
                 </div>
                 <div class="mt-5 text-center">
-                    <button onclick="updateUserDetails()" class="btn btn-primary profile-button" type="button">Save Profile</button>
+                    <button onclick="updateUserDetails()" class="btn btn-primary profile-button" type="button">Save
+                        Profile
+                    </button>
                 </div>
             </div>
         </div>

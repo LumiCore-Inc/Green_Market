@@ -3,7 +3,6 @@
 <html>
 <head>
     <title>Product Section</title>
-<%--    <link rel="stylesheet" href="css/common.css">--%>
     <style>
         form {
             max-width: 400px;
@@ -160,7 +159,7 @@
 <h2 style="padding: 16px;">Product List</h2>
 
 <div style="padding: 16px;">
-    <table id="productTable" >
+    <table id="productTable">
         <thead>
         <tr>
             <th>Name</th>

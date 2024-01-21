@@ -1,7 +1,8 @@
-<!-- <%@ page contentType="text/html;charset=UTF-8" language="java" %> -->
+<!--
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+-->
 <html>
 <head>
-
     <style>
         .user-menu {
             position: relative;
@@ -34,12 +35,11 @@
             background-color: #f0f0f0;
         }
 
-        span{
+        span {
             width: auto;
             border: none;
         }
     </style>
-
 </head>
 <body>
 
@@ -56,9 +56,13 @@
             <li id="btnAccount"><a href="${pageContext.request.contextPath}/login.jsp">Account</a></li>
         </ul>
     </nav>
-    <a style="margin-right: 20px;" href="${pageContext.request.contextPath}/cart"><img id="btnCart" src="img/icons/cart.png"style="cursor: pointer" width="30px" height="30px"></a>
+    <a style="margin-right: 20px;" href="${pageContext.request.contextPath}/cart">
+        <img id="btnCart"
+             src="img/icons/cart.png"
+             style="cursor: pointer"
+             width="30px" height="30px"></a>
     <div class="user-menu">
-        <span><img src="img/default_profile.png"style="cursor: pointer" width="30px" height="30px"></span>
+        <span><img src="img/default_profile.png" style="cursor: pointer" width="30px" height="30px"></span>
         <div class="user-menu-content">
             <a href="${pageContext.request.contextPath}/userProfileCard.jsp" class="user-menu-item">Profile</a>
             <a href="#" onclick="logout()" class="user-menu-item">Logout</a>

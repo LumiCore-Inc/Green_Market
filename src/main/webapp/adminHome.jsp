@@ -13,7 +13,6 @@
             margin: 0;
             padding: 0;
         }
-
         .sidebar {
             height: 100%;
             width: 250px;
@@ -43,49 +42,10 @@
             color: #2c3e50;
         }
 
-        .top-bar {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: -16px;
-            position: sticky;
-            top: 0;
-        }
-
-        .label {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .username {
-            margin-right: 10px;
-        }
-
-        .user-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #fff;
-            overflow: hidden;
-        }
-
         .user-icon img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-        .header-title {
-            padding: 16px;
-            background-color: #04566E;
-            color: white;
         }
     </style>
 </head>
@@ -100,7 +60,7 @@
     <a href="javascript:void(0);" onclick="loadContent('adminOrders.jsp')">Orders</a>
 </div>
 
-<div class="content" >
+<div class="content">
     <div id="mainContent">
         <jsp:include page="adminProducts.jsp"/>
     </div>

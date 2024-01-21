@@ -1,10 +1,10 @@
 <%
-    if (session.getAttribute("jwt") == null){
+    if (session.getAttribute("jwt") == null) {
         response.sendRedirect("login.jsp");
     }
 %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
 <head>
@@ -67,7 +67,6 @@
     </style>
 
 
-
 </head>
 <body>
 <div class="sidebar">
@@ -75,7 +74,7 @@
     <a href="javascript:void(0);" onclick="loadContent('adminOrders.jsp')">Orders</a>
 </div>
 
-<div class="content" >
+<div class="content">
     <div class="top-bar">
         <div class="label">Green Market</div>
     </div>
