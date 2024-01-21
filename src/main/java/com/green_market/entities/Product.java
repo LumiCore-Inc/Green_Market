@@ -118,4 +118,18 @@ public class Product {
     public void setProductHasImages(List<ProductHasImage> productHasImages) {
         this.productHasImages = productHasImages;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", ratings=" + ratings +
+                ", createdUser=" + createdUser +
+                ", description='" + description + '\'' +
+                ", qty=" + qty +
+                ", productHasImages=" + productHasImages +
+                '}';
+    }
 }

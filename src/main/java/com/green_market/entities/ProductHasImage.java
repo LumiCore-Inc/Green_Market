@@ -39,4 +39,12 @@ public class ProductHasImage {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "ProductHasImage{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

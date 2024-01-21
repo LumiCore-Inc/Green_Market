@@ -36,11 +36,11 @@
                                  style="max-width: 170px;">
                         </div>
                         <div class="small-img-col">
-                            <img src="${product.productHasImages.get(0).url}" class="small-img"
+                            <img src="${product.productHasImages.get(2).url}" class="small-img"
                                  style="max-width: 170px;">
                         </div>
                         <div class="small-img-col">
-                            <img src="${product.productHasImages.get(1).url}" class="small-img"
+                            <img src="${product.productHasImages.get(3).url}" class="small-img"
                                  style="max-width: 170px;">
                         </div>
                     </div>

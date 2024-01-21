@@ -125,6 +125,15 @@ public class ProductServlet extends HttpServlet {
                         productHasImages.add(productHasImage);
                     }
 
+                    if (productHasImages.size() <= 4){
+                        for (int i = productHasImages.size(); i <= 4; i++) {
+                            productHasImages.add(new ProductHasImage(
+                                    i,
+                                    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png"
+                            ));
+                        }
+                    }
+
                     product = new Product(
                             rst.getInt(1),
                             rst.getString(2),
@@ -136,6 +145,8 @@ public class ProductServlet extends HttpServlet {
                             productHasImages
                     );
                 }
+
+                System.out.println(product.toString());
 
 
                 if (Objects.equals(product , null)) {
