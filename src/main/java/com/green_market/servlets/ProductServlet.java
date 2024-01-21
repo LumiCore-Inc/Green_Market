@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -98,9 +97,7 @@ public class ProductServlet extends HttpServlet {
 
                     productList.add(product);
                 }
-//                response.add("data", products);
-//                response.add("message", "success");
-//                response.add("code", 200);
+
                 session.setAttribute("status", "Success");
                 session.setAttribute("message", "");
                 req.setAttribute("listTodo", productList);
@@ -111,12 +108,6 @@ public class ProductServlet extends HttpServlet {
 
                 Product product = null;
                 while (rst.next()) {
-//                    product.add("id", );
-//                    product.add("name", );
-//                    product.add("price", df.format(rst.getDouble(3)));
-//                    product.add("ratings", rst.getDouble(4));
-//                    product.add("description", rst.getString(6));
-//                    product.add("qty", rst.getInt(7));
 
                     pstm = connection.prepareStatement("select * from product_has_images where product_id=?");
                     pstm.setObject(1, rst.getInt(1));
@@ -153,10 +144,6 @@ public class ProductServlet extends HttpServlet {
                     resp.setStatus(400);
                     connection.close();
                 } else {
-//                    response.add("data", (JsonValue) product);
-//                    response.add("message", "success");
-//                    response.add("code", 200);
-
                     req.setAttribute("product", product);
                     session.setAttribute("status", "Success");
                     session.setAttribute("message", "");

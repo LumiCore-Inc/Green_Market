@@ -11,29 +11,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Security {
 
     private static final String SECRET_KEY = "greenmarket";
-
-    public static boolean isValidUser(String username, String password) {
-        // Mock data - replace this with actual database interaction
-        Map<String, String> users = new HashMap<>();
-        users.put(username, password);
-
-        // Check if the provided username exists
-        if (users.containsKey(username)) {
-            // Get the stored password for the username
-            String storedPassword = users.get(username);
-
-            // Check if the provided password matches the stored password
-            return password.equals(storedPassword);
-        }
-        return false; // User not found
-    }
-
 
     public static String createJWT(String type, int userID) {
         long currentTimeMillis = System.currentTimeMillis();

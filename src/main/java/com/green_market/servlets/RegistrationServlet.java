@@ -1,7 +1,6 @@
 package com.green_market.servlets;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.json.simple.JSONObject;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;

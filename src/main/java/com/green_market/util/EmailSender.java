@@ -11,7 +11,6 @@ public class EmailSender {
                                  String body) {
         final String username = "greenmarket865@gmail.com"; // Your email credentials
         final String password = "hecukareiiwxlmxy";
-//        final String password = "green@123";
 
         // Mail server properties
         Properties props = new Properties();

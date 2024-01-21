@@ -34,20 +34,6 @@ public class OrderServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
         BasicDataSource ds = (BasicDataSource) getServletContext().getAttribute("ds");
-//
-//        resp.setContentType("application/json");
-//
-//        // Get the request body
-//        BufferedReader reader = req.getReader();
-//        StringBuilder requestBody = new StringBuilder();
-//        String line;
-//        while ((line = reader.readLine()) != null) {
-//            requestBody.append(line);
-//        }
-//
-//        // Convert the request body to a JSON object or handle it as needed
-//        String jsonData = requestBody.toString();
-//        System.out.println("Received JSON data: " + jsonData);
 
         Connection connection = null;
         try {
@@ -67,7 +53,7 @@ public class OrderServlet extends HttpServlet {
 
                 JSONObject json = jsonPasser(req);
                 Long total = (Long) json.get("total");
-                double v = total.doubleValue();
+//                double v = total.doubleValue();
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode details = objectMapper.readTree(json.get("details").toString());
@@ -104,13 +90,10 @@ public class OrderServlet extends HttpServlet {
                                 connection.rollback();
                                 return; // Rollback transaction
                             } else {
-                                System.out.println("plase");
                                 pstm = connection.prepareStatement("UPDATE products set qty=? where id=?");
                                 pstm.setObject(1, qty - orderQty.asDouble());
                                 pstm.setObject(2, productId.asInt());
                                 int i1 = pstm.executeUpdate();
-
-                                System.out.println(i1);
 
                                 if (i1 == 0){
                                     response.add("message", "something went wrong");
@@ -131,8 +114,6 @@ public class OrderServlet extends HttpServlet {
                         pstm.setObject(4, product.get("unitPrice").asDouble());
                         pstm.setObject(5, orderQty.asDouble());
                         int update = pstm.executeUpdate();
-
-                        System.out.println(update);
 
                         if (update == 0){
                             response.add("message", "something went wrong");
@@ -289,8 +270,6 @@ public class OrderServlet extends HttpServlet {
                     );
                     orders.add(order);
                 }
-
-                System.out.println(orders.toString());
 
                 response.add("data", "");
                 response.add("message", "success");

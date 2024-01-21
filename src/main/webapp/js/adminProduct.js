@@ -58,7 +58,6 @@ function uploadImage(file)  {
                 .then(response => response.text())
                 .then(data => {
                     resolve(data);
-                    // You can perform additional actions or handling here if needed
                 })
                 .catch(error => {
                     reject(error);

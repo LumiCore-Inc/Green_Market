@@ -1,6 +1,5 @@
 package com.green_market.servlets;
 
-import com.green_market.entities.Order;
 import com.green_market.entities.OrderDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -8,7 +7,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

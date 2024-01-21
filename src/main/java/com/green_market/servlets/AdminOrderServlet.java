@@ -1,6 +1,5 @@
 package com.green_market.servlets;
 
-import com.green_market.entities.Order;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import static com.green_market.config.Security.isValidJWT;
@@ -149,8 +147,6 @@ public class AdminOrderServlet extends HttpServlet {
                     orders.add(order);
                 }
 
-                System.out.println(orders.toString());
-
                 response.add("data", orders);
                 response.add("message", "success");
                 response.add("code", 200);
@@ -205,8 +201,6 @@ public class AdminOrderServlet extends HttpServlet {
 
                     orders.add(order);
                 }
-
-                System.out.println(orders.toString());
 
                 response.add("data", orders);
                 response.add("message", "success");

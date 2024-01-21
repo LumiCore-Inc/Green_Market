@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Product Section</title>
-    <link rel="stylesheet" href="css/common.css">
+<%--    <link rel="stylesheet" href="css/common.css">--%>
     <style>
         /* Add any additional styles here */
         form {
@@ -92,7 +92,7 @@
         }
 
         #productTable th {
-            background-color: #f2f2f2;
+            background-color: #979797;
         }
 
         #productTable img {
@@ -134,22 +134,22 @@
 
     <div style="display: flex;width: 100%;">
         <div id="image-container" onclick="selectImage('no-image-text1', 'image-preview1')">
-            <span id="no-image-text1" style="font-size: 8px">No Image Selected</span>
+            <span id="no-image-text1" style="font-size: 8px;border: none;">No Image Selected</span>
             <img class="img-sec" id="image-preview1" alt="Image Preview">
         </div>
 
         <div id="image-container" onclick="selectImage('no-image-text2','image-preview2' )">
-            <span id="no-image-text2" style="font-size: 8px">No Image Selected</span>
+            <span id="no-image-text2" style="font-size: 8px;border: none;">No Image Selected</span>
             <img class="img-sec" id="image-preview2" alt="Image Preview">
         </div>
 
         <div id="image-container" onclick="selectImage('no-image-text3', 'image-preview3')">
-            <span id="no-image-text3" style="font-size: 8px">No Image Selected</span>
+            <span id="no-image-text3" style="font-size: 8px;border: none;">No Image Selected</span>
             <img class="img-sec" id="image-preview3" alt="Image Preview">
         </div>
 
         <div style="margin-right: 0" id="image-container" onclick="selectImage('no-image-text4', 'image-preview4')">
-            <span id="no-image-text4" style="font-size: 8px">No Image Selected</span>
+            <span id="no-image-text4" style="font-size: 8px;border: none;">No Image Selected</span>
             <img class="img-sec" id="image-preview4" alt="Image Preview">
         </div>
     </div>

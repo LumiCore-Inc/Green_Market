@@ -1,7 +1,6 @@
 package com.green_market.servlets;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.json.simple.JSONObject;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -21,7 +20,6 @@ import java.util.Objects;
 
 import static com.green_market.config.Security.createJWT;
 import static com.green_market.util.AESEncryption.decrypt;
-import static com.green_market.util.JsonPasser.jsonPasser;
 
 @WebServlet(name = "adminServlet", value = "/admin")
 public class AdminServlet extends HttpServlet {
