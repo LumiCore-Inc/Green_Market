@@ -73,7 +73,6 @@
 		swal("Error", message, "error")
 	} else if (status == "created") {
 		swal("Success", message, "success")
-
 	}
 </script>
 </body>

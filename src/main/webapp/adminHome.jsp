@@ -18,7 +18,7 @@
             height: 100%;
             width: 250px;
             position: fixed;
-            background-color: #04566E; /* Background color */
+            background-color: #04566E;
             padding-top: 20px;
         }
 
@@ -26,13 +26,13 @@
             padding: 15px 20px;
             text-decoration: none;
             font-size: 18px;
-            color: #ecf0f1; /* Text color */
+            color: #ecf0f1;
             display: block;
             transition: 0.3s;
         }
 
         .sidebar a:hover {
-            background-color: #3498db; /* Hover color */
+            background-color: #3498db;
         }
 
         .content {
@@ -40,7 +40,7 @@
         }
 
         h2 {
-            color: #2c3e50; /* Heading color */
+            color: #2c3e50;
         }
 
         .top-bar {
@@ -108,11 +108,6 @@
 </div>
 
 <script>
-
-    if (typeof loadedAdminProductScriptInit === 'function') {
-        loadedAdminProductScriptInit();
-    }
-
     function loadContent(page) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -126,10 +121,7 @@
     }
 
     function executeLoadedScript(page) {
-        // Extract the script tags from the loaded content
         var scripts = document.getElementById("mainContent").getElementsByTagName("script");
-
-        // Iterate through the script tags and execute them
         for (var i = 0; i < scripts.length; i++) {
             eval(scripts[i].innerText);
         }
@@ -141,9 +133,5 @@
     }
 
 </script>
-<%--<script src="js/adminProduct.js"></script>--%>
-<%--<script src="js/adminOrders.js"></script>--%>
-
-
 </body>
 </html>

@@ -1,15 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ushan
-  Date: 1/20/2024
-  Time: 11:42 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Green Market | User profile</title>
-
     <style>
         .modal {
             display: none;
@@ -128,9 +120,9 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                                                                                         width="150px"
-                                                                                         src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px"  src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                <span
                     class="font-weight-bold" id="username"></span><span
                     class="text-black-50" id="email"></span><span> </span></div>
         </div>
@@ -171,10 +163,8 @@
             </div>
         </div>
     </div>
-
     <div>
         <h2>Orders History</h2>
-
         <table>
             <thead>
             <tr>
@@ -188,7 +178,6 @@
             <tbody id="ordersTableBody">
             </tbody>
         </table>
-
         <div class="modal" id="orderModal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
@@ -202,6 +191,5 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/userProfile.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 </body>
 </html>

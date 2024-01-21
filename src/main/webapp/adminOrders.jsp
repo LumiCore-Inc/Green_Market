@@ -1,6 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.net.HttpURLConnection, java.net.URL, java.io.BufferedReader, java.io.InputStreamReader" %>
-<%@ page import="java.io.IOException" %>
 <html>
 <head>
     <link rel="stylesheet" href="css/common.css">
@@ -38,7 +36,6 @@
             background-color: #ddd;
         }
 
-        /* Add your styling here */
         .modal {
             display: none;
             position: fixed;
