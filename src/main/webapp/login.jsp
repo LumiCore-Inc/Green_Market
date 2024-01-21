@@ -38,27 +38,27 @@
                     <input type="hidden" id="message"
                            value="<%= (request.getSession().getAttribute("message") != null) ? request.getSession().getAttribute("message") : "Something went wrong!" %>">
                     <form id="loginForm" method="post" action="user">
-                        <input id="userName" type="text" name="userName" value="" placeholder="User Name">
-                        <input id="password" type="password" name="password" value="" placeholder="Password">
+                        <input id="userName" required type="text" name="userName" value="" placeholder="User Name">
+                        <input id="password" required type="password" name="password" value="" placeholder="Password">
                         <button id="btnLogin" type="submit" name="action" value="login" class="btn">Login</button>
                         <a>Forget Password</a>
                     </form>
 
                     <form id="regForm" method="post" action="user">
-                        <input id="userName" name="userName" type="text" placeholder="User Name">
-                        <input id="firstName" name="firstName" type="text" placeholder="First Name">
+                        <input id="userName" required name="userName" type="text" placeholder="User Name">
+                        <input id="firstName" required name="firstName" type="text" placeholder="First Name">
                         <input id="lastName" name="lastName" type="text" placeholder="Last Name">
                         <input id="tp" name="tp" type="text" placeholder="Tp">
                         <input id="address" name="address" type="text" placeholder="Address">
-                        <input id="password" name="password" type="password" placeholder="Password">
-                        <input id="email" name="email" type="email" placeholder="Email">
+                        <input id="password" required name="password" type="password" placeholder="Password">
+                        <input id="email" required name="email" type="email" placeholder="Email">
                         <button id="btnRegister" type="submit" name="action" value="register" class="btn">Register
                         </button>
                     </form>
 
                     <form id="adminForm" method="post" action="admin">
-                        <input id="adminUserName" type="text" name="userName" value="" placeholder="userName">
-                        <input id="adminPassword" type="password" name="password" value="" placeholder="Password">
+                        <input id="adminUserName" required type="text" name="userName" value="" placeholder="User Name">
+                        <input id="adminPassword" required type="password" name="password" value="" placeholder="Password">
                         <button id="btnAdminLogin" type="submit" name="action" value="register" class="btn">Login
                         </button>
                     </form>

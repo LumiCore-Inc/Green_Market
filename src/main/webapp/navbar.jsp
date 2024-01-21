@@ -52,7 +52,6 @@
             <li id="btnHome"><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
             <li id="btnProduct"><a href="${pageContext.request.contextPath}/product">Product</a></li>
             <li id="btnAbout"><a href="${pageContext.request.contextPath}/about">About</a></li>
-            <li id="btnContact">Contact</li>
             <li id="btnAccount"><a href="${pageContext.request.contextPath}/login.jsp">Account</a></li>
         </ul>
     </nav>

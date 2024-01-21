@@ -116,16 +116,16 @@
 
 <form id="productForm" enctype="multipart/form-data">
     <label for="productName">Name:</label>
-    <input type="text" id="productName" name="productName" required><br>
+    <input required type="text" id="productName" name="productName" required><br>
 
     <label for="productPrice">Price:</label>
-    <input type="number" id="productPrice" name="productPrice" min="0" step="0.01" required><br>
+    <input required type="number" id="productPrice" name="productPrice" min="0" step="0.01" required><br>
 
     <label for="productDescription">Description:</label>
     <textarea id="productDescription" name="productDescription" rows="4" required></textarea><br>
 
     <label for="productQty">Quantity:</label>
-    <input type="number" id="productQty" name="productQty" min="0" required><br>
+    <input required type="number" id="productQty" name="productQty" min="0" required><br>
 
     <div style="display: flex;width: 100%;">
         <div id="image-container" onclick="selectImage('no-image-text1', 'image-preview1')">
@@ -150,7 +150,6 @@
     </div>
 
     <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="previewImage()">
-
 
     <button id="add-btn" type="button" onclick="addProduct()">Add Product</button>
     <button id="update-btn" type="button" onclick="updateProduct()">Update Product</button>
